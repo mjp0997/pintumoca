@@ -1,0 +1,24 @@
+
+.component-404 {
+   max-width: 600px;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+   .component-404 {
+      max-width: 600px;
+      
+      flex-direction: row;
+   }
+}
+
+.h1-404 {
+   font-size: 100px;
+   font-weight: 300;
+
+   margin: 0;
+}
