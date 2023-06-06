@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\CurrenciesController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\PaymentMethodsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/payment-methods', [PaymentMethodsController::class, 'api_index'])->name('payment-methods.api-index');
+
+Route::get('/currencies', [CurrenciesController::class, 'api_index'])->name('currencies.api-index');
