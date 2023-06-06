@@ -11,3 +11,10 @@
 
 <!-- Theme style -->
 <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+
+<!-- Page 404 -->
+<link rel='stylesheet' href='{{ asset('css/page-404.css') }}'>
+
+@yield('custom-head')
+
+<meta name="csrf" content="{{ csrf_token() }}" id="meta-csrf">
