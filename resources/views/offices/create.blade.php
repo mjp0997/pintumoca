@@ -3,7 +3,10 @@
 @section('content')
 <div class='row'>
    <div class='col-12 col-md-9'>
-      <form class="card">
+      <form class="card" action="{{ route('offices.store') }}" method="POST">
+         @csrf
+         @method('POST')
+
          <div class="card-header">
             <h3 class="card-title">Crear sucursal</h3>
          </div>
@@ -16,12 +19,17 @@
 
                      <input
                         type="text"
-                        class="form-control"
+                        class="form-control @if($errors->has('name')) is-invalid @endif"
                         name="name"
+                        value="{{ old('name', '') }}"
                         autocomplete="off"
                         placeholder="Ingrese el nombre de la sucursal"
                         id="name"
                      >
+
+                     @error('name')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                     @enderror
                   </div>
                </div>
             </div>

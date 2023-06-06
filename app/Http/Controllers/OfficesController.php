@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\OfficeRequest;
+use App\Models\Office;
 
 class OfficesController extends Controller
 {
@@ -11,6 +12,8 @@ class OfficesController extends Controller
      */
     public function index()
     {
+        $offices = Office::paginate(12);
+
         $breadcrumb = [
             [
                 'text' => 'Sucursales'
@@ -18,7 +21,8 @@ class OfficesController extends Controller
         ];
 
         return view('offices.index', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'offices' => $offices
         ]);
     }
 
@@ -45,9 +49,14 @@ class OfficesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OfficeRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $office = new Office($data);
+        $office->save();
+
+        return redirect()->route('offices.show', ['id' => $office->id]);
     }
 
     /**
@@ -55,18 +64,21 @@ class OfficesController extends Controller
      */
     public function show(string $id)
     {
+        $office = Office::find($id);
+
         $breadcrumb = [
             [
                 'text' => 'Sucursales',
                 'route' => 'offices.index'
             ],
             [
-                'text' => 'PINTUMOCA'
+                'text' => $office?->name ?: 'Error 404'
             ],
         ];
 
         return view('offices.show', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'office' => $office
         ]);
     }
 
@@ -75,27 +87,40 @@ class OfficesController extends Controller
      */
     public function edit(string $id)
     {
+        $office = Office::find($id);
+
         $breadcrumb = [
             [
                 'text' => 'Sucursales',
                 'route' => 'offices.index'
             ],
             [
-                'text' => 'PINTUMOCA'
+                'text' => $office?->name ?: 'Error 404'
             ],
         ];
 
         return view('offices.edit', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'office' => $office
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(OfficeRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+
+        $office = Office::find($id);
+
+        if (!isset($office)) {
+            return redirect()->route('offices.show', ['id' => $id]);
+        }
+
+        $office->update($data);
+
+        return redirect()->route('offices.show', ['id' => $office->id]);
     }
 
     /**
@@ -103,6 +128,14 @@ class OfficesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $office = Office::find($id);
+
+        if (!isset($office)) {
+            return redirect()->route('offices.index');
+        }
+
+        $office->delete();
+
+        return redirect()->route('offices.index');
     }
 }

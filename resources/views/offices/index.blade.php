@@ -20,99 +20,36 @@
                </thead>
 
                <tbody>
-                  <tr>
-                     <td class="align-middle">PINTUMOCA</td>
+                  @foreach ($offices as $office)
+                     <tr>
+                        <td class="align-middle">{{ $office->name }}</td>
 
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
+                        <td>
+                           <form class="btn-group" action="{{ route('offices.destroy', ['id' => $office->id]) }}" method="POST">
+                              @csrf
+                              @method('DELETE')
 
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
+                              <a href="{{ route('offices.show', ['id' => $office->id]) }}" class="btn btn-default">
+                                 <i class="fas fa-eye"></i>
+                              </a>
 
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-                  
-                  <tr>
-                     <td class="align-middle">PINTUMOCA</td>
+                              <a href="{{ route('offices.edit', ['id' => $office->id]) }}" class="btn btn-info">
+                                 <i class="far fa-edit"></i>
+                              </a>
 
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-
-                  <tr>
-                     <td class="align-middle">PINTUMOCA</td>
-
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-
-                  <tr>
-                     <td class="align-middle">PINTUMOCA</td>
-
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
+                              <button type="submit" class="btn btn-danger">
+                                 <i class="fas fa-trash-alt"></i>
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                  @endforeach
                </tbody>
             </table>
          </div>
          <!-- /.card-body -->
 
-         <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-               <li class="page-item"><a class="page-link" href="#">«</a></li>
-               <li class="page-item"><a class="page-link" href="#">1</a></li>
-               <li class="page-item"><a class="page-link" href="#">2</a></li>
-               <li class="page-item"><a class="page-link" href="#">3</a></li>
-               <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
-         </div>
+         {{ $offices->links() }}
       </div>
       <!-- /.card -->
    </div>
