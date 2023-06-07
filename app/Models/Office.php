@@ -11,4 +11,13 @@ class Office extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name'];
+
+
+
+    // Relationships
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'office_id');
+    }
 }

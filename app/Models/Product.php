@@ -11,4 +11,13 @@ class Product extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name', 'code'];
+
+
+
+    // Relationships
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'product_id');
+    }
 }
