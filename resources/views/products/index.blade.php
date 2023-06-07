@@ -17,139 +17,51 @@
 
                      <th>Código</th>
 
-                     <th class="text-center">PINTUMOCA</th>
-
-                     <th class="text-center">PINTUMOCA</th>
-                     
-                     <th class="text-center">PINTUMOCA</th>
+                     @foreach ($offices as $office)
+                        <th class="text-center">{{ $office->name }}</th>
+                     @endforeach
 
                      <th style="width: 100px"></th>
                   </tr>
                </thead>
 
                <tbody>
-                  <tr>
-                     <td class="align-middle">MPERCOAT PLUS BLANCO</td>
+                  @foreach ($products as $product)
+                     <tr>
+                        <td class="align-middle">{{ $product->name }}</td>
 
-                     <td class="align-middle">FA0-20410001</td>
+                        <td class="align-middle">{{ $product->code }}</td>
 
-                     <td class="align-middle text-center">12</td>
+                        @foreach ($offices as $office)
+                           <td class="align-middle text-center">{{ collect($product->stocks)->firstWhere('office_id', $office->id)?->stock ?? '-' }}</td>
+                        @endforeach
 
-                     <td class="align-middle text-center">12</td>
+                        <td>
+                           <form class="btn-group" action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
+                              @csrf
+                              @method('DELETE')
 
-                     <td class="align-middle text-center">12</td>
+                              <a href="{{ route('products.show', ['id' => $product->id]) }}" class="btn btn-default">
+                                 <i class="fas fa-eye"></i>
+                              </a>
 
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
+                              <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-info">
+                                 <i class="far fa-edit"></i>
+                              </a>
 
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="align-middle">MPERCOAT PLUS BLANCO</td>
-
-                     <td class="align-middle">FA0-20410001</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="align-middle">MPERCOAT PLUS BLANCO</td>
-
-                     <td class="align-middle">FA0-20410001</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="align-middle">MPERCOAT PLUS BLANCO</td>
-
-                     <td class="align-middle">FA0-20410001</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td class="align-middle text-center">12</td>
-
-                     <td>
-                        <div class="btn-group">
-                           <button type="button" class="btn btn-default">
-                              <i class="fas fa-eye"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-info">
-                              <i class="far fa-edit"></i>
-                           </button>
-
-                           <button type="button" class="btn btn-danger">
-                              <i class="fas fa-trash-alt"></i>
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
+                              <button type="submit" class="btn btn-danger">
+                                 <i class="fas fa-trash-alt"></i>
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                  @endforeach
                </tbody>
             </table>
          </div>
          <!-- /.card-body -->
 
-         <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-               <li class="page-item"><a class="page-link" href="#">«</a></li>
-               <li class="page-item"><a class="page-link" href="#">1</a></li>
-               <li class="page-item"><a class="page-link" href="#">2</a></li>
-               <li class="page-item"><a class="page-link" href="#">3</a></li>
-               <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
-         </div>
+         {{ $products->links() }}
       </div>
       <!-- /.card -->
    </div>

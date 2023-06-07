@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use App\Models\Office;
+use App\Models\Product;
 
 class ProductsController extends Controller
 {
@@ -11,6 +13,10 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $products = Product::with('stocks.office')->orderBy('name', 'ASC')->paginate(12);
+
+        $offices = Office::orderBy('name', 'ASC')->get();
+
         $breadcrumb = [
             [
                 'text' => 'Productos'
@@ -18,7 +24,9 @@ class ProductsController extends Controller
         ];
 
         return view('products.index', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'products' => $products,
+            'offices' => $offices
         ]);
     }
 
@@ -45,9 +53,14 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $product = new Product($data);
+        $product->save();
+
+        return redirect()->route('products.show', ['id' => $product->id]);
     }
 
     /**
@@ -55,18 +68,24 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
+        $product = Product::with('stocks.office')->find($id);
+
+        $offices = Office::orderBy('name', 'ASC')->get();
+
         $breadcrumb = [
             [
                 'text' => 'Productos',
                 'route' => 'products.index'
             ],
             [
-                'text' => 'FA0-20410001'
+                'text' => $product?->code ?: 'Error 404'
             ],
         ];
 
         return view('products.show', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'product' => $product,
+            'offices' => $offices
         ]);
     }
 
@@ -75,27 +94,40 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
+        $product = Product::find($id);
+
         $breadcrumb = [
             [
                 'text' => 'Productos',
                 'route' => 'products.index'
             ],
             [
-                'text' => 'FA0-20410001'
+                'text' => $product?->code ?: 'Error 404'
             ],
         ];
 
         return view('products.edit', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'product' => $product
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+
+        $product = Product::find($id);
+
+        if (!isset($product)) {
+            return redirect()->route('products.show', ['id' => $id]);
+        }
+
+        $product->update($data);
+
+        return redirect()->route('products.show', ['id' => $product->id]);
     }
 
     /**
@@ -103,6 +135,14 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if (!isset($product)) {
+            return redirect()->route('products.index');
+        }
+
+        $product->delete();
+
+        return redirect()->route('products.index');
     }
 }

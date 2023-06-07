@@ -3,7 +3,10 @@
 @section('content')
 <div class='row'>
    <div class='col-12 col-md-9'>
-      <form class="card">
+      <form class="card" action="{{ route('products.store') }}" method="POST">
+         @csrf
+         @method('POST')
+
          <div class="card-header">
             <h3 class="card-title">Crear producto</h3>
          </div>
@@ -16,12 +19,17 @@
 
                      <input
                         type="text"
-                        class="form-control"
+                        class="form-control @if($errors->has('name')) is-invalid @endif"
                         name="name"
+                        value="{{ old('name', '') }}"
                         autocomplete="off"
                         placeholder="Ingrese el nombre del producto"
                         id="name"
                      >
+
+                     @error('name')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                     @enderror
                   </div>
                </div>
 
@@ -31,12 +39,17 @@
 
                      <input
                         type="text"
-                        class="form-control"
+                        class="form-control @if($errors->has('code')) is-invalid @endif"
                         name="code"
+                        value="{{ old('code', '') }}"
                         autocomplete="off"
                         placeholder="Ingrese el código del producto"
                         id="code"
                      >
+
+                     @error('code')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                     @enderror
                   </div>
                </div>
             </div>
