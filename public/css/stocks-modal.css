@@ -1,0 +1,10 @@
+
+.stocks-modal {
+   width: 90%;
+}
+
+@media only screen and (min-width: 768px) {
+   .stocks-modal {
+      max-width: 500px;
+   }
+}
