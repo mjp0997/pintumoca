@@ -12,7 +12,7 @@ class OfficesController extends Controller
      */
     public function index()
     {
-        $offices = Office::paginate(12);
+        $offices = Office::orderBy('name', 'ASC')->paginate(12);
 
         $breadcrumb = [
             [
