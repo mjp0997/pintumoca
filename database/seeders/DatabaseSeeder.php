@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(CurrencySeeder::class);
+
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }
