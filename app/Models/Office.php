@@ -16,6 +16,11 @@ class Office extends Model
 
     // Relationships
 
+    public function users()
+    {
+        return $this->hasMany(User::class, 'office_id');
+    }
+
     public function stocks()
     {
         return $this->hasMany(Stock::class, 'office_id');

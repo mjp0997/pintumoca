@@ -36,4 +36,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+    // Relationships
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class, 'office_id');
+    }
 }
