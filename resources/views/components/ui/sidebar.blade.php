@@ -1,15 +1,21 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
    <!-- Brand Logo -->
-   <a href="index3.html" class="brand-link text-center">
-      <span class="brand-text font-weight-light">PINTUMOCA</span>
+   <a href="#" class="brand-link text-center">
+      <span class="brand-text font-weight-light">
+         @if (isset(Auth::user()->office))
+            {{ Auth::user()->office->name }}
+         @else
+            ADMINISTRADOR
+         @endif
+      </span>
    </a>
 
    <!-- Sidebar -->
    <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-         <a href="#" class="w-100 text-center">Alexander Pierce</a>
+         <a href="#" class="w-100 text-center">{{ Auth::user()->name }}</a>
       </div>
 
       <!-- Sidebar Menu -->
