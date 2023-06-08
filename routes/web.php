@@ -23,9 +23,10 @@ use App\Http\Controllers\UsersController;
 |
 */
 
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
+});
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
@@ -89,4 +90,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::put('/', [StocksController::class, 'update'])->name('stocks.update');
         // Route::delete('/{id}', [PaymentMethodsController::class, 'destroy'])->name('stocks.destroy');
     });
+    
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
