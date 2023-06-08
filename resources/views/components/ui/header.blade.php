@@ -31,9 +31,16 @@
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
    <!-- Control sidebar content goes here -->
-   <div class="p-3">
-   <h5>Title</h5>
-   <p>Sidebar content</p>
+   <div class="h-100 d-flex flex-column p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+
+      <form action='{{ route('logout') }}' class="mt-auto" method="POST">
+         @csrf
+         @method('POST')
+         
+         <button type="submit" class="btn btn-danger btn-block">Cerrar sesión</button>
+      </form>
    </div>
 </aside>
 <!-- /.control-sidebar -->
