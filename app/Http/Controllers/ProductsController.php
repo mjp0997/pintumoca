@@ -5,15 +5,34 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Office;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('stocks.office')->orderBy('name', 'ASC')->paginate(12);
+        $search = $request->query('search', null);
+
+        $office_id = $request->query('office_id', null);
+
+        $products = Product::with('stocks.office')->orderBy('name', 'ASC');
+
+        if (!is_null($search)) {
+            $products->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%")->orWhere('code', 'LIKE', "%$search%");
+            });
+        }
+
+        if (!is_null($office_id)) {
+            $products->whereHas('stocks', function($query) use ($office_id) {
+                return $query->where('office_id', $office_id);
+            });
+        }
+
+        $products = $products->paginate(12);
 
         $offices = Office::orderBy('name', 'ASC')->get();
 
