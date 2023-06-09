@@ -21,13 +21,13 @@ class ProductsController extends Controller
         $products = Product::with('stocks.office')->orderBy('name', 'ASC');
 
         if (!is_null($search)) {
-            $products->where(function ($query) use ($search) {
+            $products = $products->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%$search%")->orWhere('code', 'LIKE', "%$search%");
             });
         }
 
         if (!is_null($office_id)) {
-            $products->whereHas('stocks', function($query) use ($office_id) {
+            $products = $products->whereHas('stocks', function($query) use ($office_id) {
                 return $query->where('office_id', $office_id);
             });
         }
@@ -163,5 +163,30 @@ class ProductsController extends Controller
         $product->delete();
 
         return redirect()->route('products.index');
+    }
+
+    /**
+     * Get a listing of the resource as a JSON
+     */
+    public function api_index(Request $request)
+    {
+        $office_id = $request->query('office_id', null);
+
+        $products = Product::with([
+            'stocks' => function($query) use ($office_id)
+            {
+                return $query->where('office_id', $office_id)->with('office');
+            }
+        ])->orderBy('name', 'ASC');
+
+        if (!is_null($office_id)) {
+            $products = $products->whereHas('stocks', function($query) use ($office_id) {
+                return $query->where('office_id', $office_id);
+            });
+        }
+
+        $products = $products->get();
+
+        return response()->json($products);
     }
 }

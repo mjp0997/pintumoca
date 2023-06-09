@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\CurrenciesController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CurrenciesController;
 use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,5 @@ use App\Http\Controllers\PaymentMethodsController;
 Route::get('/payment-methods', [PaymentMethodsController::class, 'api_index'])->name('payment-methods.api-index');
 
 Route::get('/currencies', [CurrenciesController::class, 'api_index'])->name('currencies.api-index');
+
+Route::get('/products', [ProductsController::class, 'api_index'])->name('products.api-index');
