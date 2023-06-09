@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const modal = document.querySelector(`#${modalId}`);
 
-      const closeBtns = modal.querySelectorAll('.modal-close-btn');
+      const closeBtns = modal?.querySelectorAll('.modal-close-btn') || [];
 
       btn.addEventListener('click', () => {
          modal.classList.add('show');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
          });
       });
 
-      modal.addEventListener('click', e => {
+      modal?.addEventListener('click', e => {
          if (e.target == modal) {
             modal.classList.remove('show');
          }
