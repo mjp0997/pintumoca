@@ -13,4 +13,13 @@ class ProcedureLine extends Model
     protected $table = 'procedure_line';
 
     protected $fillable = ['procedure_id', 'product_id', 'quantity'];
+
+
+
+    // Relationships
+
+    public function procedure()
+    {
+        return $this->belongsTo(Procedure::class, 'procedure_id');
+    }
 }

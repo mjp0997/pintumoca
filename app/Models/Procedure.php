@@ -11,4 +11,13 @@ class Procedure extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['user_id', 'from_office_id', 'to_office_id', 'date'];
+
+
+
+    // Relationships
+
+    public function procedureLines()
+    {
+        return $this->hasMany(ProcedureLine::class, 'procedure_id');
+    }
 }
