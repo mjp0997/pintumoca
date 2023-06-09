@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IncreaseStockRequest;
 use App\Http\Requests\StockRequest;
 use App\Models\Stock;
-use Illuminate\Http\Request;
 
 class StocksController extends Controller
 {
