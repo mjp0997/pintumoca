@@ -19,7 +19,7 @@ class EnoughStock implements DataAwareRule, ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (!isset($this->data['product_id'])) {
-            $fail('La sucursal de origen es obligatoria');
+            $fail('El id del producto es obligatorio');
         }
 
         if (!isset($this->data['from_office_id'])) {
