@@ -2,8 +2,6 @@ let products = [];
 
 let cart = [];
 
-const debounceTimer = 1000;
-
 document.addEventListener('DOMContentLoaded', async () => {
    const office = document.querySelector('#office_id');
    
@@ -319,15 +317,6 @@ const updateCart = () => {
    cartContainer.innerHTML = '';
 
    cart.forEach(p => cartContainer.appendChild(createCartRow(p.id, p.name, p.code, p.stocks[0].stock, p.price, p.quantity, p.priceError, p.quantityError)));
-}
-
-const debounce = (callback, timer) => {
-   let timeout;
- 
-   return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => callback(...args), timer);
-   }
 }
 
 const getOldCart = () => {

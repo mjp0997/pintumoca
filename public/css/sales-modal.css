@@ -1,0 +1,26 @@
+
+@media only screen and (min-width: 768px) {
+   .sales-modal-container {
+      justify-content: flex-end;
+   }
+}
+
+.sales-modal {
+   width: 90%;
+   height: 80%;
+
+   transform: translateX(100%);
+
+   transition: transform 0.3s ease;
+}
+
+@media only screen and (min-width: 768px) {
+   .sales-modal {
+      width: 50%;
+      height: 100%;
+   }
+}
+
+.show .sales-modal {
+   transform: translateX(0);
+}
