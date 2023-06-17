@@ -14,8 +14,8 @@ class CurrencySeeder extends Seeder
     public function run(): void
     {
         $currencies = [
-            ['name' => 'bolívares'],
-            ['name' => 'dólares'],
+            ['name' => 'bolívares', 'iso_code' => 'VED'],
+            ['name' => 'dólares', 'iso_code' => 'USD'],
         ];
         
         foreach ($currencies as $currency) {
