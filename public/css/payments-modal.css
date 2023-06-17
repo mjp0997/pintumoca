@@ -1,0 +1,20 @@
+
+.payments-modal {
+   width: 90%;
+}
+
+@media only screen and (min-width: 768px) {
+   .payments-modal {
+      width: 50%;
+   }
+}
+
+.payments-list-modal {
+   width: 90%;
+}
+
+@media only screen and (min-width: 768px) {
+   .payments-list-modal {
+      width: 70%;
+   }
+}
