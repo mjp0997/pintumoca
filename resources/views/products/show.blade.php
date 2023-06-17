@@ -133,7 +133,7 @@
 
    {{-- Increase stock modals --}}
    @foreach ($product->stocks as $stock)
-      <div class='modal-container {{ old('stock_id', null) == $stock->id ? 'show' : '' }}' id="increase-stock-modal-{{ $stock->id }}">
+      <div class='modal-container {{ old('stock_id', null) == $stock->id ? 'show' : '' }}' id="increase-stock-modal-{{ $stock->office_id }}">
          <form class="modal-content stocks-modal" action="{{ route('stocks.update') }}" method="POST">
             @csrf
             @method('PUT')
