@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\ProceduresController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SalePaymentsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\UsersController;
@@ -34,11 +36,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::prefix('/users')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/create', [UsersController::class, 'create'])->name('users.create');
-        // POST
+        Route::post('/', [UsersController::class, 'store'])->name('users.store');
         Route::get('/{id}', [UsersController::class, 'show'])->name('users.show');
         Route::get('/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
-        // PUT
-        // DELETE
+        Route::put('/{id}', [UsersController::class, 'update'])->name('users.update');
+        Route::delete('/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
     });
 
     Route::prefix('/offices')->group(function () {
@@ -90,6 +92,26 @@ Route::group(['middleware' => 'auth'], function() {
         Route::put('/', [StocksController::class, 'update'])->name('stocks.update');
         // Route::delete('/{id}', [PaymentMethodsController::class, 'destroy'])->name('stocks.destroy');
     });
-    
+
+    Route::prefix('/procedures')->group(function () {
+        // Route::get('/', [ProceduresController::class, 'index'])->name('procedures.index');
+        // Route::get('/create', [ProceduresController::class, 'create'])->name('procedures.create');
+        Route::post('/', [ProceduresController::class, 'store'])->name('procedures.store');
+        // Route::get('/{id}', [ProceduresController::class, 'show'])->name('procedures.show');
+        // Route::get('/{id}/edit', [ProceduresController::class, 'edit'])->name('procedures.edit');
+        // Route::put('/', [ProceduresController::class, 'update'])->name('procedures.update');
+        // Route::delete('/{id}', [ProceduresController::class, 'destroy'])->name('procedures.destroy');
+    });
+
+    Route::prefix('/sale-payments')->group(function () {
+        // Route::get('/', [SalePaymentsController::class, 'index'])->name('sale-payments.index');
+        // Route::get('/create', [SalePaymentsController::class, 'create'])->name('sale-payments.create');
+        Route::post('/', [SalePaymentsController::class, 'store'])->name('sale-payments.store');
+        // Route::get('/{id}', [SalePaymentsController::class, 'show'])->name('sale-payments.show');
+        // Route::get('/{id}/edit', [SalePaymentsController::class, 'edit'])->name('sale-payments.edit');
+        // Route::put('/', [SalePaymentsController::class, 'update'])->name('sale-payments.update');
+        Route::delete('/{id}', [SalePaymentsController::class, 'destroy'])->name('sale-payments.destroy');
+    });
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

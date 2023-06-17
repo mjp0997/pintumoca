@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Models\Office;
+use App\Models\Role;
+use App\Models\User;
 
 class UsersController extends Controller
 {
@@ -11,6 +14,10 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $users = User::with('office', 'role')->whereHas('role', function($query) {
+            return $query->where('name', '!=', 'DEV');
+        })->orderBy('name', 'ASC')->paginate(12);
+
         $breadcrumb = [
             [
                 'text' => 'Usuarios'
@@ -18,7 +25,8 @@ class UsersController extends Controller
         ];
 
         return view('users.index', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'users' => $users
         ]);
     }
 
@@ -27,6 +35,10 @@ class UsersController extends Controller
      */
     public function create()
     {
+        $offices = Office::orderBy('name', 'ASC')->get();
+
+        $roles = Role::where('name', '!=', 'DEV')->orderBy('display_name', 'ASC')->get();
+
         $breadcrumb = [
             [
                 'text' => 'Usuarios',
@@ -38,16 +50,23 @@ class UsersController extends Controller
         ];
 
         return view('users.create', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'offices' => $offices,
+            'roles' => $roles,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $user = new User($data);
+        $user->save();
+
+        return redirect()->route('users.show', ['id' => $user->id]);
     }
 
     /**
@@ -55,18 +74,23 @@ class UsersController extends Controller
      */
     public function show(string $id)
     {
+        $user = User::with('office', 'role')->whereHas('role', function($query) {
+            return $query->where('name', '!=', 'DEV');
+        })->find($id);
+
         $breadcrumb = [
             [
                 'text' => 'Usuarios',
                 'route' => 'users.index'
             ],
             [
-                'text' => 'Alexander Pierce'
+                'text' => $user?->name ?: 'Error 404'
             ],
         ];
 
         return view('users.show', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'user' => $user,
         ]);
     }
 
@@ -75,28 +99,48 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
+        $user = User::with('office', 'role')->whereHas('role', function($query) {
+            return $query->where('name', '!=', 'DEV');
+        })->find($id);
+        
+        $offices = Office::orderBy('name', 'ASC')->get();
+
+        $roles = Role::where('name', '!=', 'DEV')->orderBy('display_name', 'ASC')->get();
+
         $breadcrumb = [
             [
                 'text' => 'Usuarios',
                 'route' => 'users.index'
             ],
             [
-                'text' => 'Alexander Pierce',
-                'route' => ''
+                'text' => $user?->name ?: 'Error 404'
             ],
         ];
 
         return view('users.edit', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'user' => $user,
+            'offices' => $offices,
+            'roles' => $roles,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+
+        $user = User::find($id);
+
+        if (!isset($user)) {
+            return redirect()->route('users.show', ['id' => $id]);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('users.show', ['id' => $user->id]);
     }
 
     /**
@@ -104,6 +148,14 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+
+        if (!isset($user)) {
+            return redirect()->route('users.index');
+        }
+
+        $user->delete();
+
+        return redirect()->route('users.index');
     }
 }
