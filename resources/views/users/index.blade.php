@@ -6,18 +6,6 @@
       <div class="card">
          <div class="card-header">
             <h3 class="card-title">Listado de usuarios</h3>
-
-            <div class="card-tools">
-               <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                  <div class="input-group-append">
-                     <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                     </button>
-                  </div>
-               </div>
-            </div>
          </div>
          <!-- /.card-header -->
 
@@ -28,32 +16,105 @@
                      <th>Nombre</th>
                      <th>Sucursal</th>
                      <th>Correo</th>
+                     <th style="width: 100px;"></th>
                   </tr>
                </thead>
 
                <tbody>
                   <tr>
-                     <td>183</td>
-                     <td>John Doe</td>
-                     <td>11-7-2014</td>
+                     <td class="align-middle">John Doe</td>
+
+                     <td class="align-middle">PINTUMOCA</td>
+
+                     <td class="align-middle">john.doe@extension.com</td>
+
+                     <td>
+                        <div class="btn-group">
+                           <a href="{{ route('users.show', ['id' => 1]) }}" class="btn btn-default">
+                              <i class="fas fa-eye"></i>
+                           </a>
+
+                           <a href="{{ route('users.edit', ['id' => 1]) }}" class="btn btn-info">
+                              <i class="far fa-edit"></i>
+                           </a>
+
+                           <button type="button" class="btn btn-danger">
+                              <i class="fas fa-trash-alt"></i>
+                           </button>
+                        </div>
+                     </td>
+                  </tr>
+                  
+                  <tr>
+                     <td class="align-middle">John Doe</td>
+
+                     <td class="align-middle">PINTUMOCA</td>
+
+                     <td class="align-middle">john.doe@extension.com</td>
+
+                     <td>
+                        <div class="btn-group">
+                           <a href="{{ route('users.show', ['id' => 1]) }}" class="btn btn-default">
+                              <i class="fas fa-eye"></i>
+                           </a>
+
+                           <a href="{{ route('users.edit', ['id' => 1]) }}" class="btn btn-info">
+                              <i class="far fa-edit"></i>
+                           </a>
+
+                           <button type="button" class="btn btn-danger">
+                              <i class="fas fa-trash-alt"></i>
+                           </button>
+                        </div>
+                     </td>
                   </tr>
 
                   <tr>
-                     <td>219</td>
-                     <td>Alexander Pierce</td>
-                     <td>11-7-2014</td>
+                     <td class="align-middle">John Doe</td>
+
+                     <td class="align-middle">PINTUMOCA</td>
+
+                     <td class="align-middle">john.doe@extension.com</td>
+
+                     <td>
+                        <div class="btn-group">
+                           <a href="{{ route('users.show', ['id' => 1]) }}" class="btn btn-default">
+                              <i class="fas fa-eye"></i>
+                           </a>
+
+                           <a href="{{ route('users.edit', ['id' => 1]) }}" class="btn btn-info">
+                              <i class="far fa-edit"></i>
+                           </a>
+
+                           <button type="button" class="btn btn-danger">
+                              <i class="fas fa-trash-alt"></i>
+                           </button>
+                        </div>
+                     </td>
                   </tr>
 
                   <tr>
-                     <td>657</td>
-                     <td>Bob Doe</td>
-                     <td>11-7-2014</td>
-                  </tr>
+                     <td class="align-middle">John Doe</td>
 
-                  <tr>
-                     <td>175</td>
-                     <td>Mike Doe</td>
-                     <td>11-7-2014</td>
+                     <td class="align-middle">PINTUMOCA</td>
+
+                     <td class="align-middle">john.doe@extension.com</td>
+
+                     <td>
+                        <div class="btn-group">
+                           <a href="{{ route('users.show', ['id' => 1]) }}" class="btn btn-default">
+                              <i class="fas fa-eye"></i>
+                           </a>
+
+                           <a href="{{ route('users.edit', ['id' => 1]) }}" class="btn btn-info">
+                              <i class="far fa-edit"></i>
+                           </a>
+
+                           <button type="button" class="btn btn-danger">
+                              <i class="fas fa-trash-alt"></i>
+                           </button>
+                        </div>
+                     </td>
                   </tr>
                </tbody>
             </table>

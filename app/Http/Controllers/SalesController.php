@@ -10,6 +10,7 @@ use App\Models\Office;
 use App\Models\PaymentMethod;
 use App\Models\Sale;
 use App\Models\Stock;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -19,9 +20,43 @@ class SalesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sales = Sale::with('user', 'office', 'client', 'lines.product', 'payments.paymentMethod')->orderBy('date', 'DESC')->paginate(12);
+        $date = $request->query('date', null);
+
+        $office_id = $request->query('office_id', null);
+
+        $user_id = $request->query('user_id', null);
+
+        $client = $request->query('client', null);
+
+        $sales = Sale::with('user', 'office', 'client', 'lines.product', 'payments.paymentMethod')->orderBy('date', 'DESC');
+
+        if (isset($date)) {
+            $sales = $sales->whereDate('date', $date);
+        }
+
+        if (isset($office_id)) {
+            $sales = $sales->where('office_id', $office_id);
+        }
+
+        if (isset($user_id)) {
+            $sales = $sales->where('user_id', $user_id);
+        }
+
+        if (isset($client)) {
+            $sales = $sales->whereHas('client', function($query) use ($client) {
+                return $query->where('name', 'LIKE', "%$client%");
+            });
+        }
+
+        $sales = $sales->paginate(12);
+
+        $offices = Office::orderBy('name', 'ASC')->get();
+
+        $users = User::with('role')->whereHas('role', function($query) {
+            return $query->where('name', '!=', 'DEV');
+        })->orderBy('name', 'ASC')->get();
 
         $breadcrumb = [
             [
@@ -31,7 +66,9 @@ class SalesController extends Controller
 
         return view('sales.index', [
             'breadcrumb' => $breadcrumb,
-            'sales' => $sales
+            'sales' => $sales,
+            'offices' => $offices,
+            'users' => $users
         ]);
     }
 
