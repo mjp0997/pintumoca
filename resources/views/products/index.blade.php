@@ -111,21 +111,23 @@
                            @endforeach
 
                            <td>
-                              <form class="btn-group" action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
+                              <form action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
                                  @csrf
                                  @method('DELETE')
-
-                                 <a href="{{ route('products.show', ['id' => $product->id]) }}" class="btn btn-default">
-                                    <i class="fas fa-eye"></i>
-                                 </a>
-
-                                 <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-info">
-                                    <i class="far fa-edit"></i>
-                                 </a>
-
-                                 <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                 </button>
+                                 
+                                 <div class="btn-group w-100">
+                                    <a href="{{ route('products.show', ['id' => $product->id]) }}" class="btn btn-default">
+                                       <i class="fas fa-eye"></i>
+                                    </a>
+   
+                                    <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-info">
+                                       <i class="far fa-edit"></i>
+                                    </a>
+   
+                                    <button type="submit" class="btn btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                 </div>
                               </form>
                            </td>
                         </tr>
