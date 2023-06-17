@@ -2,7 +2,6 @@
 
 @section('custom-head')
    <link rel='stylesheet' href='{{ asset('css/sales-create.css') }}'>
-   <link rel='stylesheet' href='{{ asset('css/modal.css') }}'>
    <link rel='stylesheet' href='{{ asset('css/sales-modal.css') }}'>
 
    <meta name="methods-link" content="{{ route('payment-methods.api-index') }}" id="methods-api-link">
@@ -339,8 +338,6 @@
 @endsection
 
 @section('scripts')
-   <script src='{{ asset('js/modal.js') }}'></script>
-
    <script src='{{ asset('js/debounce.js') }}'></script>
    <script src='{{ asset('js/products-dynamic-form.js') }}'></script>
    <script src='{{ asset('js/payments-dynamic-form.js') }}'></script>

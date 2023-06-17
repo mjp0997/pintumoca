@@ -15,6 +15,10 @@
 <!-- Page 404 -->
 <link rel='stylesheet' href='{{ asset('css/page-404.css') }}'>
 
+<!-- Custom general styles -->
+<link rel='stylesheet' href='{{ asset('css/modal.css') }}'>
+<link rel='stylesheet' href='{{ asset('css/custom-sidebar.css') }}'>
+
 @yield('custom-head')
 
 <meta name="csrf" content="{{ csrf_token() }}" id="meta-csrf">

@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('custom-head')
-   <link rel='stylesheet' href='{{ asset('css/modal.css') }}'>
    <link rel='stylesheet' href='{{ asset('css/payments-modal.css') }}'>
 @endsection
 

@@ -20,7 +20,7 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+         <a class="nav-link open-modal-btn" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-modal-id='control-sidebar'>
             <i class="fas fa-th-large"></i>
          </a>
       </li>
@@ -29,9 +29,9 @@
 <!-- /.navbar -->
 
 <!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
+<div class='modal-container custom-control-sidebar-container' id="control-sidebar">
    <!-- Control sidebar content goes here -->
-   <div class="h-100 d-flex flex-column p-3">
+   <aside class="custom-control-sidebar d-flex flex-column p-3">
       <h5>Title</h5>
       <p>Sidebar content</p>
 
@@ -41,6 +41,6 @@
          
          <button type="submit" class="btn btn-danger btn-block">Cerrar sesión</button>
       </form>
-   </div>
-</aside>
+   </aside>
+</div>
 <!-- /.control-sidebar -->

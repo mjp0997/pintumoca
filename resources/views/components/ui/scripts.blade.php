@@ -8,3 +8,6 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- Custom general scripts -->
+<script src='{{ asset('js/modal.js') }}'></script>
