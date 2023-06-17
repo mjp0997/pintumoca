@@ -1,138 +1,317 @@
 @extends('layouts.dashboard')
 
+@section('custom-head')
+   <link rel='stylesheet' href='{{ asset('css/modal.css') }}'>
+   <link rel='stylesheet' href='{{ asset('css/payments-modal.css') }}'>
+@endsection
+
 @section('content')
-   <div class='row'>
-      <div class='col-12'>
-         <div class="card">
-            <div class="card-header">
-               <h3 class="card-title">Detalles de la venta</h3>
-            </div>
+   @if (isset($sale))
+      <div class='row'>
+         <div class='col-12'>
+            <div class="card">
+               <div class="card-header">
+                  <h3 class="card-title">Detalles de la venta</h3>
+               </div>
 
-            <div class="card-body">
-               <div class="row">
-                  <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                     <div class="row">
-                        <div class="col-12 col-sm-4">
-                           <div class="info-box bg-light">
-                              <div class="info-box-content">
-                                 <span class="info-box-text text-center text-muted">Total</span>
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                        <div class="row">
+                           <div class="col-12 col-sm-4">
+                              <div class="info-box bg-light">
+                                 <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Total</span>
 
-                                 <span class="info-box-number text-center text-muted mb-0">2300</span>
+                                    <span class="info-box-number text-center text-muted mb-0">$ {{ $sale->total }}</span>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-12 col-sm-4">
+                              <div class="info-box bg-light">
+                                 <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Fecha</span>
+
+                                    <span class="info-box-number text-center text-muted mb-0">{{ date_format(date_create($sale->date), 'd/m/Y') }}</span>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-12 col-sm-4">
+                              <div class="info-box bg-light">
+                                 <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Sucursal</span>
+
+                                    <span class="info-box-number text-center text-muted mb-0">{{ $sale->office->name }}</span>
+                                 </div>
                               </div>
                            </div>
                         </div>
 
-                        <div class="col-12 col-sm-4">
-                           <div class="info-box bg-light">
-                              <div class="info-box-content">
-                                 <span class="info-box-text text-center text-muted">Cantidad de productos</span>
+                        <div class="row">
+                           <div class="col-12">
+                              <h4>Productos</h4>
 
-                                 <span class="info-box-number text-center text-muted mb-0">2000</span>
-                              </div>
-                           </div>
-                        </div>
+                              @foreach ($sale->lines as $line)
+                                 <div class="post">
+                                    <div class='row'>
+                                       <div class='col-8 col-md-5'>
+                                          <div class="w-100 h-100 d-flex flex-column justify-content-center">
+                                             <span class="d-block">
+                                                <a href="#"><b>{{ $line->product->name }}</b></a>
+                                             </span>
+            
+                                             <small class="d-block">{{ $line->product->code }}</small>
+                                          </div>
+                                       </div>
 
-                        <div class="col-12 col-sm-4">
-                           <div class="info-box bg-light">
-                              <div class="info-box-content">
-                                 <span class="info-box-text text-center text-muted">Sucursal</span>
+                                       <div class='col'>
+                                          <div class='row h-100'>
+                                             <div class='col-12 col-md'>
+                                                <div class='h-100 d-flex align-items-center justify-content-center'>
+                                                   <p class="mb-0">$ {{ $line->price }}</p>
+                                                </div>
+                                             </div>
 
-                                 <span class="info-box-number text-center text-muted mb-0">20</span>
-                              </div>
+                                             <div class='col-12 col-md'>
+                                                <div class='h-100 d-flex align-items-center justify-content-center'>
+                                                   <p class="mb-0">{{ $line->quantity }}</p>
+                                                </div>
+                                             </div>
+                                             
+                                             <div class='col-12 col-md'>
+                                                <div class='h-100 d-flex align-items-center justify-content-center'>
+                                                   <p class="mb-0"><b>$ {{ $line->subtotal }}</b></p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              @endforeach
                            </div>
                         </div>
                      </div>
 
-                     <div class="row">
-                        <div class="col-12">
-                           <h4>Productos</h4>
+                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                        <h3 class="text-primary text-center"><i class="fas fa-dollar-sign"></i> FACTURACIÓN</h3>
 
-                           <div class="post">
-                              <div class='row'>
-                                 <div class='col-8 col-md-5'>
-                                    <div class="w-100 h-100 d-flex flex-column justify-content-center">
-                                       <span class="d-block">
-                                          <a href="#"><b>IMPERCOAT PLUS BLANCO</b></a>
-                                       </span>
-      
-                                       <small class="d-block">FA0-20410001</small>
-                                    </div>
-                                 </div>
+                        <br>
 
-                                 <div class='col'>
-                                    <div class='row h-100'>
-                                       <div class='col-12 col-md'>
-                                          <div class='h-100 d-flex align-items-center justify-content-center'>
-                                             <p class="mb-0">$ 100</p>
-                                          </div>
-                                       </div>
-
-                                       <div class='col-12 col-md'>
-                                          <div class='h-100 d-flex align-items-center justify-content-center'>
-                                             <p class="mb-0">5</p>
-                                          </div>
-                                       </div>
-                                       
-                                       <div class='col-12 col-md'>
-                                          <div class='h-100 d-flex align-items-center justify-content-center'>
-                                             <p class="mb-0"><b>$ 500</b></p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
+                        @if (isset($sale->client))
+                           <div class="text-muted">
+                              <p class="text-sm">Cliente
+                                 <b class="d-block">{{ $sale->client->name }}</b>
+                              </p>
                            </div>
+                        @endif
+         
+                        <h5 class="mt-5 text-muted">Pagos</h5>
+
+                        <ul class="list-unstyled">
+                           @foreach ($sale->payments as $line)
+                              <li>
+                                 <div class='d-flex justify-content-between'>
+                                    <p class="btn-link text-secondary mb-0">{{ $line->paymentMethod->name }}</p>
+
+                                    <b class="text-secondary">$ {{ $line->dollars_amount }}</b>
+                                 </div>
+                              </li>
+                           @endforeach
+
+                           <li class="border-top mt-3 pt-3">
+                              <div class='d-flex justify-content-between'>
+                                 <p class="btn-link text-secondary mb-0">Deuda pendiente</p>
+
+                                 <b>$ {{ $sale->debt }}</b>
+                              </div>
+                           </li>
+                        </ul>
+
+                        <div class="text-center mt-5 mb-3">
+                           @if ($sale->debt > 0)
+                              <button type="button" class="btn btn-primary open-modal-btn" data-modal-id='payments-create-modal'>Agregar pago</button>
+                           @endif
+
+                           <button type="button" class="btn btn-secondary open-modal-btn" data-modal-id='payments-modal'>Ver pagos</button>
                         </div>
                      </div>
                   </div>
+               </div>
+               <!-- /.card-body -->
+            </div>
+         </div>
+      </div>
 
-                  <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                     <h3 class="text-primary text-center"><i class="fas fa-dollar-sign"></i> FACTURACIÓN</h3>
+      {{-- Modal agregar pago --}}
+      <div class='modal-container {{ $errors->hasAny('payment_id', 'currency_id', 'amount') ? 'show' : '' }}' id="payments-create-modal">
+         <form class="modal-content payments-modal" action="{{ route('sale-payments.store') }}" method="POST">
+            @csrf
+            @method('POST')
 
-                     <br>
+            <input type='hidden' name="sale_id" value="{{ $sale->id }}">
 
-                     <div class="text-muted">
-                        <p class="text-sm">Cliente
-                           <b class="d-block">Los pollitos amarillos</b>
-                        </p>
-                     </div>
+            <div class="modal-header">
+               <h4 class="modal-title">Reportar pago</h4>
       
-                     <h5 class="mt-5 text-muted">Pagos</h5>
+               <button type="button" class="close modal-close-btn" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+               </button>
+            </div>
+      
+            <div class="modal-body">
+               <div class='row'>
+                  <div class='col-12 col-md'>
+                     <div class="form-group mb-md-0">
+                        <label for="payment_id">Método de pago</label>
 
-                     <ul class="list-unstyled">
-                        <li>
-                           <div class='d-flex justify-content-between'>
-                              <p class="btn-link text-secondary mb-0">Banco de Venezuela</p>
+                        <select
+                           class="form-control text-center @if($errors->has('payment_id')) is-invalid @endif"
+                           name="payment_id"
+                           id="payment_id"
+                        >
+                           <option value='' disabled {{ old('payment_id', '') == '' ? 'selected' : '' }}>Seleccione un método de pago</option>
+                           
+                           @foreach ($payment_methods as $method)
+                              <option value='{{ $method->id }}' {{ old('payment_id', '') == $method->id ? 'selected' : '' }}>{{ $method->name }}</option>
+                           @endforeach
+                        </select>
 
-                              <b class="text-secondary">$ 300</b>
-                           </div>
-                        </li>
+                        @error('payment_id')
+                           <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
+                     </div>
+                  </div>
 
-                        <li>
-                           <div class='d-flex justify-content-between'>
-                              <p class="btn-link text-secondary mb-0">Banesco</p>
+                  <div class='col-12 col-md'>
+                     <div class="form-group mb-md-0">
+                        <label for="currency_id">Divisa</label>
 
-                              <b class="text-secondary">$ 200</b>
-                           </div>
-                        </li>
+                        <select
+                           class="form-control text-center @if($errors->has('currency_id')) is-invalid @endif"
+                           name="currency_id"
+                           id="currency_id"
+                        >
+                           <option value='' disabled {{ old('currency_id', '') == '' ? 'selected' : '' }}>Seleccione una divisa</option>
+                           
+                           @foreach ($currencies as $currency)
+                              <option value='{{ $currency->id }}' {{ old('currency_id', '') == $currency->id ? 'selected' : '' }}>{{ $currency->name }}</option>
+                           @endforeach
+                        </select>
 
-                        <li class="border-top mt-3 pt-3">
-                           <div class='d-flex justify-content-between'>
-                              <p class="btn-link text-secondary mb-0">Deuda pendiente</p>
+                        @error('currency_id')
+                           <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
+                     </div>
+                  </div>
 
-                              <b>$ 200</b>
-                           </div>
-                        </li>
-                     </ul>
+                  <div class='col-12 col-md'>
+                     <div class="form-group mb-md-0">
+                        <label for="amount">Monto</label>
+   
+                        <input
+                           type="text"
+                           class="form-control text-center @if($errors->has('amount')) is-invalid @endif"
+                           name="amount"
+                           value="{{ old('amount', '') }}"
+                           autocomplete="off"
+                           placeholder="Ingrese el monto"
+                           id="amount"
+                        >
 
-                     <div class="text-center mt-5 mb-3">
-                        <a href="#" class="btn btn-primary">Agregar pago</a>
+                        @error('amount')
+                           <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
                      </div>
                   </div>
                </div>
             </div>
-            <!-- /.card-body -->
+      
+            <div class="modal-footer justify-content-between">
+               <button type="button" class="btn btn-default modal-close-btn" data-dismiss="modal">Cerrar</button>
+
+               <button type="submit" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+            </div>
+         </form>
+      </div>
+      {{-- End: Modal agregar pago --}}
+
+      {{-- Modal listar pagos --}}
+      <div class='modal-container' id="payments-modal">
+         <div class="modal-content payments-list-modal">
+            <div class="modal-header">
+               <h4 class="modal-title">Reportar pago</h4>
+      
+               <button type="button" class="close modal-close-btn" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+               </button>
+            </div>
+      
+            <div class="modal-body table-responsive p-0">
+               <table class="table table-hover text-nowrap">
+                  <thead>
+                     <tr>
+                        <th>Fecha</th>
+
+                        <th class="text-center">Cambio</th>
+
+                        <th>Método de pago</th>
+   
+                        <th>Divisa</th>
+
+                        <th class="text-center">Monto</th>
+
+                        <th class="text-center">Monto en dólares</th>
+   
+                        <th style="width: 100px"></th>
+                     </tr>
+                  </thead>
+   
+                  <tbody>
+                     @foreach ($sale->payments as $line)
+                        <tr>
+                           <td class="align-middle">{{ date_format($line->created_at, 'd/m/Y') }}</td>
+
+                           <td class="align-middle text-center">{{ $line->dollar_rate }}</td>
+
+                           <td class="align-middle">{{ $line->paymentMethod->name }}</td>
+      
+                           <td class="align-middle">{{ $line->currency->name }}</td>
+
+                           <td class="align-middle text-center">$ {{ $line->formated_amount }}</td>
+
+                           <td class="align-middle text-center">$ {{ $line->dollars_amount }}</td>
+      
+                           <td>
+                              <form action="{{ route('sale-payments.destroy', ['id' => $line->id]) }}" method="POST">
+                                 @csrf
+                                 @method('DELETE')
+
+                                 <div class="w-100 btn-group">
+                                    <button type="submit" class="btn btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                 </div>
+                              </form>
+                           </td>
+                        </tr>
+                     @endforeach
+                  </tbody>
+               </table>
+            </div>
+      
+            <div class="modal-footer justify-content-between">
+               <button type="button" class="btn btn-default modal-close-btn" data-dismiss="modal">Cerrar</button>
+            </div>
          </div>
       </div>
-   </div>
+      {{-- End: Modal listar pagos --}}
+   @else
+      @include('components.ui.404')
+   @endif
+@endsection
+
+@section('scripts')
+   <script src='{{ asset('js/modal.js') }}'></script>
 @endsection
