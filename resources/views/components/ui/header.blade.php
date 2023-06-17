@@ -20,7 +20,7 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link open-modal-btn" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-modal-id='control-sidebar'>
+         <a class="nav-link open-modal-btn" data-slide="true" href="#" role="button" data-modal-id='control-sidebar'>
             <i class="fas fa-th-large"></i>
          </a>
       </li>
