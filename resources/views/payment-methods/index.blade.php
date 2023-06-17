@@ -25,21 +25,23 @@
                         <td class="align-middle">{{ $method->name }}</td>
 
                         <td>
-                           <form class="btn-group" action="{{ route('payment-methods.destroy', ['id' => $method->id]) }}" method="POST">
+                           <form action="{{ route('payment-methods.destroy', ['id' => $method->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')
-
-                              <a href="{{ route('payment-methods.show', ['id' => $method->id]) }}" class="btn btn-default">
-                                 <i class="fas fa-eye"></i>
-                              </a>
-
-                              <a href="{{ route('payment-methods.edit', ['id' => $method->id]) }}" class="btn btn-info">
-                                 <i class="far fa-edit"></i>
-                              </a>
-
-                              <button type="submit" class="btn btn-danger">
-                                 <i class="fas fa-trash-alt"></i>
-                              </button>
+                              
+                              <div class="btn-group w-100">
+                                 <a href="{{ route('payment-methods.show', ['id' => $method->id]) }}" class="btn btn-default">
+                                    <i class="fas fa-eye"></i>
+                                 </a>
+   
+                                 <a href="{{ route('payment-methods.edit', ['id' => $method->id]) }}" class="btn btn-info">
+                                    <i class="far fa-edit"></i>
+                                 </a>
+   
+                                 <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                 </button>
+                              </div>
                            </form>
                         </td>
                      </tr>

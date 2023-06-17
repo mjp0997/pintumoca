@@ -25,21 +25,23 @@
                         <td class="align-middle">{{ $office->name }}</td>
 
                         <td>
-                           <form class="btn-group" action="{{ route('offices.destroy', ['id' => $office->id]) }}" method="POST">
+                           <form action="{{ route('offices.destroy', ['id' => $office->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')
 
-                              <a href="{{ route('offices.show', ['id' => $office->id]) }}" class="btn btn-default">
-                                 <i class="fas fa-eye"></i>
-                              </a>
-
-                              <a href="{{ route('offices.edit', ['id' => $office->id]) }}" class="btn btn-info">
-                                 <i class="far fa-edit"></i>
-                              </a>
-
-                              <button type="submit" class="btn btn-danger">
-                                 <i class="fas fa-trash-alt"></i>
-                              </button>
+                              <div class="btn-group w-100">
+                                 <a href="{{ route('offices.show', ['id' => $office->id]) }}" class="btn btn-default">
+                                    <i class="fas fa-eye"></i>
+                                 </a>
+   
+                                 <a href="{{ route('offices.edit', ['id' => $office->id]) }}" class="btn btn-info">
+                                    <i class="far fa-edit"></i>
+                                 </a>
+   
+                                 <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                 </button>
+                              </div>
                            </form>
                         </td>
                      </tr>
