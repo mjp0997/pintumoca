@@ -67,7 +67,7 @@
    <div class='col-12 col-md-3'>
       <div class='card'>
          <div class='card-body d-flex flex-column gap-3'>
-            <a href="{{ route('products.index') }}" class="btn btn-outline-secondary btn-block">Lista de sucursales</a>
+            <a href="{{ route('products.index') }}" class="btn btn-outline-secondary btn-block">Lista de productos</a>
          </div>
       </div>
    </div>
