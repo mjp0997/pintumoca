@@ -78,6 +78,43 @@
                         <p>Crear</p>
                      </a>
                   </li>
+
+                  <li class="nav-item">
+                     <a href="{{ route('products.mass-create') }}" class="nav-link {{ request()->is('products/mass-create') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+
+                        <p>Creación masiva</p>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+
+            <li class="nav-item {{ request()->is('procedures*') ? 'menu-open' : '' }}">
+               <a href="#" class="nav-link {{ request()->is('procedures*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-truck"></i>
+
+                  <p>
+                     Entregas
+                     <i class="right fas fa-angle-left"></i>
+                  </p>
+               </a>
+
+               <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                     <a href="{{ route('procedures.index') }}" class="nav-link {{ request()->is('procedures') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+
+                        <p>Listado</p>
+                     </a>
+                  </li>
+
+                  <li class="nav-item">
+                     <a href="{{ route('procedures.create') }}" class="nav-link {{ request()->is('procedures/create') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+
+                        <p>Crear</p>
+                     </a>
+                  </li>
                </ul>
             </li>
 
