@@ -5,6 +5,10 @@
    <link rel='stylesheet' href='{{ asset('css/stocks-modal.css') }}'>
 @endsection
 
+@section('scripts')
+   <script src='{{ asset('js/modal.js') }}'></script>
+@endsection
+
 @section('content')
 @if (isset($product))
    <div class='row'>
@@ -273,8 +277,4 @@
 @else
    @include('components.ui.404')
 @endif
-@endsection
-
-@section('scripts')
-   <script src='{{ asset('js/modal.js') }}'></script>
 @endsection

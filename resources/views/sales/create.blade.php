@@ -9,6 +9,12 @@
    <meta name="products-link" content="{{ route('products.api-index') }}" id="products-api-link">
 @endsection
 
+@section('scripts')
+   <script src='{{ asset('js/debounce.js') }}'></script>
+   <script src='{{ asset('js/products-dynamic-form.js') }}'></script>
+   <script src='{{ asset('js/payments-dynamic-form.js') }}'></script>
+@endsection
+
 @section('content')
 <div class='row'>
    <div class='col-12 col-md-9'>
@@ -335,10 +341,4 @@
       </div>
    </div>
 </div>
-@endsection
-
-@section('scripts')
-   <script src='{{ asset('js/debounce.js') }}'></script>
-   <script src='{{ asset('js/products-dynamic-form.js') }}'></script>
-   <script src='{{ asset('js/payments-dynamic-form.js') }}'></script>
 @endsection
