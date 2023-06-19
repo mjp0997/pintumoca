@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductMassRequest;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ReadProductsFileRequest;
+use App\Imports\ProductImport;
 use App\Models\Office;
 use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller
 {
@@ -188,5 +193,110 @@ class ProductsController extends Controller
         $products = $products->get();
 
         return response()->json($products);
+    }
+
+    public function mass_create(Request $request)
+    {
+        $breadcrumb = [
+            [
+                'text' => 'Productos',
+                'route' => 'products.index'
+            ],
+            [
+                'text' => 'Creación masiva'
+            ],
+        ];
+
+        return view('products.massive', [
+            'breadcrumb' => $breadcrumb
+        ]);
+    }
+
+    public function mass_read(ReadProductsFileRequest $request)
+    {
+        $data = $request->validated();
+
+        $import = new ProductImport;
+        
+        Excel::import($import, $request->file('import')->store('temp'));
+
+        $products = $import->getProducts();
+
+        $products = collect($products)->map(function ($product) {
+            $product_data = [
+                'code' => strtoupper($product['material']),
+                'name' => $product['descripcion'],
+            ];
+
+            unset($product['material']);
+            unset($product['descripcion']);
+            unset($product['marca']);
+            unset($product['uv']);
+            unset($product['precio_lista']);
+            unset($product['precio_dist']);
+            unset($product['pvp']);
+            unset($product['psvp']);
+
+            $offices = [];
+            $total_stock = 0;
+
+            foreach ($product as $key => $value) {
+                $offices[strtoupper($key)] = $value;
+                $total_stock += $value;
+            }
+
+            $product_data['offices'] = $offices;
+            $product_data['total_stock'] = $total_stock;
+
+            return $product_data;
+        });
+
+        $offices = collect($products[0]['offices'])->map(function ($value, $key) {
+            return $key;
+        });
+
+        return redirect()->route('products.mass-create')->with('products', $products)->with('offices', $offices);
+    }
+
+    public function mass_store(ProductMassRequest $request)
+    {
+        $data = $request->validated();
+
+        $all_products = isset($data['all_products']) ? true : false;
+
+        foreach ($data['products'] as $row) {
+            if (!$all_products) {
+                $total_stock = 0;
+
+                foreach ($row['offices'] as $office => $stock) {
+                    $total_stock += $stock;
+                }
+            }
+
+            if (!isset($total_stock) || $total_stock > 0) {
+                $product = Product::updateOrCreate([
+                    'code' => $row['code']
+                ], [
+                    'name' => $row['name']
+                ]);
+    
+                foreach ($row['offices'] as $office_name => $stock) {
+                    if ($all_products || $stock > 0) {
+                        $office = Office::firstOrCreate([
+                            'name' => $office_name
+                        ]);
+        
+                        $stock_data = Stock::updateOrCreate([
+                            'product_id' => $product->id,
+                            'office_id' => $office->id
+                        ], [
+                            'stock' => $stock
+                        ]);
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('products.index');
     }
 }
