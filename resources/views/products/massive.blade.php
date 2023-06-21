@@ -8,10 +8,11 @@
          bsCustomFileInput.init();
       });
    </script>
+
+   <script src='{{ asset('js/mass-dynamic-list.js') }}'></script>
 @endsection
 
 @section('content')
-TODO: agregar funcionalidad a los botones de eliminar
 
 <div class='row'>
    <div class='col-12 col-md-9'>
@@ -86,13 +87,13 @@ TODO: agregar funcionalidad a los botones de eliminar
    
                   <tbody>
                      @foreach (session('products') as $product)
-                        <input type='hidden' name="products[{{ $loop->index }}][code]" value="{{ $product['code'] }}">
-                        <input type='hidden' name="products[{{ $loop->index }}][name]" value="{{ $product['name'] }}">
-                        @foreach (session('offices') as $office)
-                           <input type='hidden' name="products[{{ $loop->parent->index }}][offices][{{ $office }}]" value="{{ $product['offices'][$office] ?? 0 }}">
-                        @endforeach
+                        <tr class="products-list-element @if ($product['total_stock'] == 0) bg-warning @endif">
+                           <input type='hidden' name="products[{{ $loop->index }}][code]" value="{{ $product['code'] }}">
+                           <input type='hidden' name="products[{{ $loop->index }}][name]" value="{{ $product['name'] }}">
+                           @foreach (session('offices') as $office)
+                              <input type='hidden' name="products[{{ $loop->parent->index }}][offices][{{ $office }}]" value="{{ $product['offices'][$office] ?? 0 }}">
+                           @endforeach
 
-                        <tr class="@if ($product['total_stock'] == 0) bg-warning @endif">
                            <td class="align-middle">{{ $product['code'] }}</td>
 
                            <td class="align-middle" style="width: 200px;">{{ $product['name'] }}</td>
@@ -103,7 +104,7 @@ TODO: agregar funcionalidad a los botones de eliminar
       
                            <td class="align-middle">
                               <div class="btn-group">
-                                 <button type="submit" class="btn btn-danger">
+                                 <button type="button" class="btn btn-danger btn-action-delete">
                                     <i class="fas fa-trash-alt"></i>
                                  </button>
                               </div>
