@@ -275,7 +275,7 @@
          </button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body d-flex flex-column">
          <form class='row' id="filter-form">
             <div class='col'>
                <div class="d-flex">
@@ -307,7 +307,7 @@
             </div>
          </form>
 
-         <div class="card-body table-responsive p-0">
+         <div class="card-body table-responsive p-0 flex-grow-1 sales-body">
             <table class="table table-hover text-nowrap">
                <thead>
                   <tr>

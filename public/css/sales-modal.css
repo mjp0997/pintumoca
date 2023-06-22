@@ -21,6 +21,20 @@
    }
 }
 
+.sales-modal > .modal-body {
+   max-height: calc(80vh - 140px);
+}
+
+@media only screen and (min-width: 768px) {
+   .sales-modal > .modal-body {
+      max-height: calc(100vh - 140px);
+   }
+}
+
 .show .sales-modal {
    transform: translateX(0);
+}
+
+.sales-body {
+   overflow-y: auto;
 }
