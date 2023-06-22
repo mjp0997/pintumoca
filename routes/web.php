@@ -56,7 +56,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::prefix('/products')->group(function () {
         Route::get('/', [ProductsController::class, 'index'])->name('products.index');
         Route::get('/create', [ProductsController::class, 'create'])->name('products.create');
+        Route::get('/mass-create', [ProductsController::class, 'mass_create'])->name('products.mass-create');
         Route::post('/', [ProductsController::class, 'store'])->name('products.store');
+        Route::post('/mass-read', [ProductsController::class, 'mass_read'])->name('products.mass-read');
+        Route::post('/mass-store', [ProductsController::class, 'mass_store'])->name('products.mass-store');
         Route::get('/{id}', [ProductsController::class, 'show'])->name('products.show');
         Route::get('/{id}/edit', [ProductsController::class, 'edit'])->name('products.edit');
         Route::put('/{id}', [ProductsController::class, 'update'])->name('products.update');
@@ -94,13 +97,13 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     Route::prefix('/procedures')->group(function () {
-        // Route::get('/', [ProceduresController::class, 'index'])->name('procedures.index');
-        // Route::get('/create', [ProceduresController::class, 'create'])->name('procedures.create');
+        Route::get('/', [ProceduresController::class, 'index'])->name('procedures.index');
+        Route::get('/create', [ProceduresController::class, 'create'])->name('procedures.create');
         Route::post('/', [ProceduresController::class, 'store'])->name('procedures.store');
-        // Route::get('/{id}', [ProceduresController::class, 'show'])->name('procedures.show');
+        Route::get('/{id}', [ProceduresController::class, 'show'])->name('procedures.show');
         // Route::get('/{id}/edit', [ProceduresController::class, 'edit'])->name('procedures.edit');
         // Route::put('/', [ProceduresController::class, 'update'])->name('procedures.update');
-        // Route::delete('/{id}', [ProceduresController::class, 'destroy'])->name('procedures.destroy');
+        Route::delete('/{id}', [ProceduresController::class, 'destroy'])->name('procedures.destroy');
     });
 
     Route::prefix('/sale-payments')->group(function () {

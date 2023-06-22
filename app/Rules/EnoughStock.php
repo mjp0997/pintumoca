@@ -18,7 +18,12 @@ class EnoughStock implements DataAwareRule, ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!isset($this->data['product_id'])) {
+        $exploded = explode('.', $attribute);
+        $position = $exploded[1];
+        
+        $products_row = $this->data['products'][$position];
+
+        if (!isset($products_row['product_id'])) {
             $fail('El id del producto es obligatorio');
         }
 
@@ -26,7 +31,7 @@ class EnoughStock implements DataAwareRule, ValidationRule
             $fail('La sucursal de origen es obligatoria');
         }
 
-        $stock = Stock::where('product_id', $this->data['product_id'])->where('office_id', $this->data['from_office_id'])->first();
+        $stock = Stock::where('product_id', $products_row['product_id'])->where('office_id', $this->data['from_office_id'])->first();
 
         if (!isset($stock)) {
             $fail('No existe stock relacionado a este producto');

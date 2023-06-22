@@ -185,12 +185,14 @@
    {{-- End: Increase stock modals --}}
 
    {{-- Procedure model --}}
-   <div class='modal-container {{ $errors->hasAny('from_office_id', 'to_office_id', 'product_id', 'quantity') ? 'show' : '' }}' id="procedure-modal">
+   <div class='modal-container {{ $errors->hasAny('from_office_id', 'to_office_id', 'products.0.product_id', 'products.0.quantity') ? 'show' : '' }}' id="procedure-modal">
       <form class="modal-content stocks-modal" action="{{ route('procedures.store') }}" method="POST">
          @csrf
          @method('POST')
 
-         <input type='hidden' name="product_id" value="{{ $product->id }}">
+         <input type='hidden' name="single" value="1">
+
+         <input type='hidden' name="products[0][product_id]" value="{{ $product->id }}">
 
          <div class="modal-header">
             <h4 class="modal-title">Mover stock</h4>
@@ -252,13 +254,13 @@
 
                      <input
                         type="text"
-                        class="form-control @if($errors->has('quantity')) is-invalid @endif"
+                        class="form-control @if($errors->has('products.0.quantity')) is-invalid @endif"
                         id="procedure-quantity"
-                        name="quantity"
-                        value="{{ old('quantity', '') }}"
+                        name="products[0][quantity]"
+                        value="{{ old('products.0.quantity', '') }}"
                      >
 
-                     @error('quantity')
+                     @error('products.0.quantity')
                         <span class="error invalid-feedback">{{ $message }}</span>
                      @enderror
                   </div>
