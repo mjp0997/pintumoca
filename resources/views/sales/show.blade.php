@@ -94,19 +94,18 @@
                      </div>
 
                      <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary text-center"><i class="fas fa-dollar-sign"></i> FACTURACIÓN</h3>
+                        <h4 class="text-primary text-center">FACTURACIÓN</h4>
 
                         <br>
 
                         @if (isset($sale->client))
-                           <div class="text-muted">
-                              <p class="text-sm">Cliente
-                                 <b class="d-block">{{ $sale->client->name }}</b>
-                              </p>
+                           <div class="d-flex justify-content-between text-muted">
+                              <p class="text-sm">Cliente:</p>
+                              <b class="text-sm ml-auto">{{ $sale->client->name }}</b>
                            </div>
                         @endif
          
-                        <h5 class="mt-5 text-muted">Pagos</h5>
+                        <h5 class="mt-5 text-muted text-center">Pagos</h5>
 
                         <ul class="list-unstyled">
                            @foreach ($sale->payments as $line)
@@ -124,6 +123,12 @@
                                  <p class="btn-link text-secondary mb-0">Deuda pendiente</p>
 
                                  <b>$ {{ $sale->debt }}</b>
+                              </div>
+
+                              <div class='d-flex justify-content-between'>
+                                 <p class="btn-link text-secondary mb-0">Conversión</p>
+
+                                 <b>Bs {{ number_format($sale->debt * $dollar_rate, 2) }}</b>
                               </div>
                            </li>
                         </ul>
