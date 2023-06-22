@@ -1,5 +1,21 @@
 @extends('layouts.dashboard')
 
+@section('head')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/custom-select2.css') }}">
+@endsection
+
+@section('scripts')
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<script>
+   $(function() {
+      $('.select2').select2();
+   });
+</script>
+@endsection
+
 @section('content')
 <div class='row'>
    <div class='col-12 col-md'>
@@ -47,14 +63,15 @@
                <div class='col-12 col-md'>
                   <div class="form-group">
                      <label for="user_id">Usuario</label>
-
+                     
                      <select
-                        class="form-control text-center @if($errors->has('user_id')) is-invalid @endif"
+                        class="form-control select2 text-center @if($errors->has('user_id')) is-invalid @endif"
+                        style="width: 100%;"
                         name="user_id"
                         id="user_id"
                      >
                         <option value='' {{ request()->get('user_id', '') == '' ? 'selected' : '' }}>Todos</option>
-
+                        
                         @foreach ($users as $user)
                            <option value='{{ $user->id }}' {{ request()->get('user_id', '') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                         @endforeach
