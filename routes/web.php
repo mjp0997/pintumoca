@@ -81,19 +81,19 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/create', [SalesController::class, 'create'])->name('sales.create');
         Route::post('/', [SalesController::class, 'store'])->name('sales.store');
         Route::get('/{id}', [SalesController::class, 'show'])->name('sales.show');
-        Route::get('/{id}/edit', [SalesController::class, 'edit'])->name('sales.edit');
-        // PUT
-        // DELETE
+        // Route::get('/{id}/edit', [SalesController::class, 'edit'])->name('sales.edit');
+        // Route::put('/{id}', [SalesController::class, 'update'])->name('sales.update');
+        Route::delete('/{id}', [SalesController::class, 'destroy'])->name('sales.destroy');
     });
 
     Route::prefix('/stocks')->group(function () {
-        // Route::get('/', [PaymentMethodsController::class, 'index'])->name('stocks.index');
-        // Route::get('/create', [PaymentMethodsController::class, 'create'])->name('stocks.create');
+        // Route::get('/', [StocksController::class, 'index'])->name('stocks.index');
+        // Route::get('/create', [StocksController::class, 'create'])->name('stocks.create');
         Route::post('/', [StocksController::class, 'store'])->name('stocks.store');
-        // Route::get('/{id}', [PaymentMethodsController::class, 'show'])->name('stocks.show');
-        // Route::get('/{id}/edit', [PaymentMethodsController::class, 'edit'])->name('stocks.edit');
+        // Route::get('/{id}', [StocksController::class, 'show'])->name('stocks.show');
+        // Route::get('/{id}/edit', [StocksController::class, 'edit'])->name('stocks.edit');
         Route::put('/', [StocksController::class, 'update'])->name('stocks.update');
-        // Route::delete('/{id}', [PaymentMethodsController::class, 'destroy'])->name('stocks.destroy');
+        // Route::delete('/{id}', [StocksController::class, 'destroy'])->name('stocks.destroy');
     });
 
     Route::prefix('/procedures')->group(function () {

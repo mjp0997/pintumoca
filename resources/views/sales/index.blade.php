@@ -155,10 +155,6 @@
                                     <i class="fas fa-eye"></i>
                                  </a>
 
-                                 <a href="{{ route('sales.edit', ['id' => $sale->id]) }}" class="btn btn-info">
-                                    <i class="far fa-edit"></i>
-                                 </a>
-
                                  <button type="button" class="btn btn-danger">
                                     <i class="fas fa-trash-alt"></i>
                                  </button>
