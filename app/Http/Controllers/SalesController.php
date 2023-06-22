@@ -30,7 +30,7 @@ class SalesController extends Controller
 
         $client = $request->query('client', null);
 
-        $sales = Sale::with('user', 'office', 'client', 'lines.product', 'payments.paymentMethod')->orderBy('date', 'DESC');
+        $sales = Sale::with('user', 'office', 'client', 'lines.product', 'payments.paymentMethod')->orderBy('created_at', 'DESC');
 
         if (isset($date)) {
             $sales = $sales->whereDate('date', $date);
