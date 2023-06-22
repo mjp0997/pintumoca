@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -51,6 +52,27 @@ class Sale extends Model
         }
 
         return number_format($debt, '2');
+    }
+
+
+
+    // Scopes
+
+    /**
+     * Get the sale relationships
+     */
+    public function scopeRelationships(Builder $query): void
+    {
+        $query->with([
+            'user',
+            'office',
+            'client',
+            'lines.product',
+            'payments' => function(Builder $query)
+            {
+                $query->with('paymentMethod')->orderBy('created_at', 'DESC');
+            },
+        ]);
     }
 
 

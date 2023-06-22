@@ -30,7 +30,7 @@ class SalesController extends Controller
 
         $client = $request->query('client', null);
 
-        $sales = Sale::with('user', 'office', 'client', 'lines.product', 'payments.paymentMethod')->orderBy('created_at', 'DESC');
+        $sales = Sale::relationships()->orderBy('created_at', 'DESC');
 
         if (isset($date)) {
             $sales = $sales->whereDate('date', $date);
@@ -149,7 +149,7 @@ class SalesController extends Controller
      */
     public function show(string $id)
     {
-        $sale = Sale::with('user', 'office', 'client', 'lines.product', 'payments.paymentMethod')->find($id);
+        $sale = Sale::relationships()->find($id);
 
         $currencies = Currency::orderBy('name', 'ASC')->get();
 
@@ -170,6 +170,7 @@ class SalesController extends Controller
             'sale' => $sale,
             'currencies' => $currencies,
             'payment_methods' => $payment_methods,
+            'dollar_rate' => $this->getCurrentExchange()
         ]);
     }
 
