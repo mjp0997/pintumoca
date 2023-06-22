@@ -48,7 +48,7 @@ class SalePayment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sale()
+    public function sale(): BelongsTo
     {
         return $this->belongsTo(Sale::class, 'sale_id');
     }
@@ -58,9 +58,9 @@ class SalePayment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function paymentMethod()
+    public function paymentMethod(): BelongsTo
     {
-        return $this->belongsTo(PaymentMethod::class, 'payment_id');
+        return $this->belongsTo(PaymentMethod::class, 'payment_id')->withTrashed();
     }
 
     /**
@@ -70,6 +70,6 @@ class SalePayment extends Model
      */
     public function currency(): BelongsTo
     {
-        return $this->belongsTo(Currency::class, 'currency_id');
+        return $this->belongsTo(Currency::class, 'currency_id')->withTrashed();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -16,7 +17,12 @@ class Product extends Model
 
     // Relationships
 
-    public function stocks()
+    /**
+     * Get all of the stocks for the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class, 'product_id');
     }

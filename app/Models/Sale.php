@@ -64,7 +64,7 @@ class Sale extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     /**
@@ -74,7 +74,7 @@ class Sale extends Model
      */
     public function office(): BelongsTo
     {
-        return $this->belongsTo(Office::class, 'office_id');
+        return $this->belongsTo(Office::class, 'office_id')->withTrashed();
     }
 
     /**
@@ -84,7 +84,7 @@ class Sale extends Model
      */
     public function client(): BelongsTo
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_id')->withTrashed();
     }
 
     /**

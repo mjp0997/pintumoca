@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Office extends Model
@@ -16,12 +17,22 @@ class Office extends Model
 
     // Relationships
 
-    public function users()
+    /**
+     * Get all of the users for the Office
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users(): HasMany
     {
         return $this->hasMany(User::class, 'office_id');
     }
 
-    public function stocks()
+    /**
+     * Get all of the stocks for the Office
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class, 'office_id');
     }
