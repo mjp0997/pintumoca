@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('scripts')
+<script src='{{ asset('js/alerts.js') }}'></script>
+@endsection
+
 @section('content')
 <div class='row'>
    <div class='col-12 col-md'>
@@ -111,7 +115,7 @@
                            @endforeach
 
                            <td>
-                              <form action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
+                              <form class="delete-form" action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
                                  @csrf
                                  @method('DELETE')
                                  

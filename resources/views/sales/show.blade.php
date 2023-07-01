@@ -4,6 +4,10 @@
    <link rel='stylesheet' href='{{ asset('css/payments-modal.css') }}'>
 @endsection
 
+@section('scripts')
+   <script src='{{ asset('js/alerts.js') }}'></script>
+@endsection
+
 @section('content')
    @if (isset($sale))
       <div class='row'>
@@ -288,7 +292,7 @@
                            <td class="align-middle text-center">$ {{ $line->dollars_amount }}</td>
       
                            <td>
-                              <form action="{{ route('sale-payments.destroy', ['id' => $line->id]) }}" method="POST">
+                              <form class="delete-form" action="{{ route('sale-payments.destroy', ['id' => $line->id]) }}" method="POST">
                                  @csrf
                                  @method('DELETE')
 

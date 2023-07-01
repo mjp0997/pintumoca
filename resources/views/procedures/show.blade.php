@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('scripts')
+<script src='{{ asset('js/alerts.js') }}'></script>
+@endsection
+
 @section('content')
 @if (isset($procedure))
    <div class='row'>
@@ -90,7 +94,7 @@
 
       <div class='col-12 col-md-3'>
          <div class='card'>
-            <form class='card-body d-flex flex-column gap-3' action="{{ route('procedures.destroy', ['id' => $procedure->id]) }}" method="POST">
+            <form class='card-body d-flex flex-column delete-form' action="{{ route('procedures.destroy', ['id' => $procedure->id]) }}" method="POST">
                @csrf
                @method('DELETE')
 

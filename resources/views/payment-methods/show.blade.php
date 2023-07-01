@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('scripts')
+<script src='{{ asset('js/alerts.js') }}'></script>
+@endsection
+
 @section('content')
 @if (isset($method))
    <div class='row'>
@@ -26,7 +30,7 @@
 
       <div class='col-12 col-md-3'>
          <div class='card'>
-            <form class='card-body d-flex flex-column gap-3' action="{{ route('payment-methods.destroy', ['id' => $method->id]) }}" method="POST">
+            <form class='card-body d-flex flex-column delete-form' action="{{ route('payment-methods.destroy', ['id' => $method->id]) }}" method="POST">
                @csrf
                @method('DELETE')
                <a href="{{ route('payment-methods.index') }}" class="btn btn-outline-secondary btn-block">Lista de métodos de pago</a>

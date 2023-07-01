@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('scripts')
+<script src='{{ asset('js/alerts.js') }}'></script>
+@endsection
+
 @section('content')
 <div class="row">
    <div class="col-12">
@@ -25,7 +29,7 @@
                         <td class="align-middle">{{ $office->name }}</td>
 
                         <td>
-                           <form action="{{ route('offices.destroy', ['id' => $office->id]) }}" method="POST">
+                           <form class="delete-form" action="{{ route('offices.destroy', ['id' => $office->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')
 

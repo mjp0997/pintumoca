@@ -14,6 +14,8 @@
       $('.select2').select2();
    });
 </script>
+
+<script src='{{ asset('js/alerts.js') }}'></script>
 @endsection
 
 @section('content')
@@ -150,15 +152,20 @@
                            <td class="align-middle">$ {{ $sale->total }}</td>
 
                            <td>
-                              <div class="btn-group">
-                                 <a href="{{ route('sales.show', ['id' => $sale->id]) }}" class="btn btn-default">
-                                    <i class="fas fa-eye"></i>
-                                 </a>
+                              <form class="delete-form" action='{{ route('sales.destroy', ['id' => $sale->id]) }}' method='POST'>
+                                 @csrf
+                                 @method('DELETE')
 
-                                 <button type="button" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                 </button>
-                              </div>
+                                 <div class="btn-group w-100">
+                                    <a href="{{ route('sales.show', ['id' => $sale->id]) }}" class="btn btn-default">
+                                       <i class="fas fa-eye"></i>
+                                    </a>
+   
+                                    <button type="submit" class="btn btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                 </div>
+                              </form>
                            </td>
                         </tr>
                      @endforeach

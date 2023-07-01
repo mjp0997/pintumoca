@@ -7,6 +7,7 @@
 
 @section('scripts')
    <script src='{{ asset('js/modal.js') }}'></script>
+   <script src='{{ asset('js/alerts.js') }}'></script>
 @endsection
 
 @section('content')
@@ -69,7 +70,7 @@
 
       <div class='col-12 col-md-3'>
          <div class='card'>
-            <form class='card-body d-flex flex-column gap-3' action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
+            <form class='card-body d-flex flex-column delete-form' action="{{ route('products.destroy', ['id' => $product->id]) }}" method="POST">
                @csrf
                @method('DELETE')
 

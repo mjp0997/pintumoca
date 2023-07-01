@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('scripts')
+   <script src='{{ asset('js/alerts.js') }}'></script>
+@endsection
+
 @section('content')
 @if (isset($user))
    <div class='row'>
@@ -51,11 +55,11 @@
       </div>
 
       <div class='col-12 col-md-3'>
-         <form class='card' action="{{ route('users.destroy', ['id' => $user->id]) }}" method="POST">
+         <form class='card delete-form' action="{{ route('users.destroy', ['id' => $user->id]) }}" method="POST">
             @csrf
             @method('DELETE')
 
-            <div class='card-body d-flex flex-column gap-3'>
+            <div class='card-body d-flex flex-column'>
                <a href="{{ route('users.index') }}" class="btn btn-outline-secondary btn-block">Lista de usuarios</a>
 
                <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-block">Editar</a>
