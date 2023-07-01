@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 // Controllers
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\PaymentMethodsController;

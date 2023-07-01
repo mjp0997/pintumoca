@@ -207,6 +207,22 @@ class SalesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $sale = Sale::relationships()->find($id);
+
+        if (!isset($sale)) {
+            return redirect()->route('sales.index');
+        }
+
+        foreach ($sale->lines as $line) {
+            $product = Stock::where('product_id', $line->product_id)->where('office_id', $sale->office_id);
+
+            if (isset($product)) {
+                $product->increment('stock', $line->quantity);
+            }
+        }
+
+        $sale->delete();
+
+        return redirect()->route('sales.index');
     }
 }
