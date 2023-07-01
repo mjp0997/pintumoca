@@ -16,6 +16,7 @@
 <link rel='stylesheet' href='{{ asset('css/page-404.css') }}'>
 
 <!-- Custom general styles -->
+<link rel='stylesheet' href='{{ asset('css/utilities.css') }}'>
 <link rel='stylesheet' href='{{ asset('css/modal.css') }}'>
 <link rel='stylesheet' href='{{ asset('css/custom-sidebar.css') }}'>
 
