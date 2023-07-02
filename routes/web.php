@@ -33,7 +33,7 @@ Route::group(['middleware' => 'guest'], function() {
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-    Route::prefix('/users')->group(function () {
+    Route::group(['prefix' => '/users', 'middleware' => 'role:admin'], function () {
         Route::get('/', [UsersController::class, 'index'])->name('users.index');
         Route::get('/create', [UsersController::class, 'create'])->name('users.create');
         Route::post('/', [UsersController::class, 'store'])->name('users.store');
@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
     });
 
-    Route::prefix('/offices')->group(function () {
+    Route::group(['prefix' => '/offices', 'middleware' => 'role:admin'], function () {
         Route::get('/', [OfficesController::class, 'index'])->name('offices.index');
         Route::get('/create', [OfficesController::class, 'create'])->name('offices.create');
         Route::post('/', [OfficesController::class, 'store'])->name('offices.store');
@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/{id}', [OfficesController::class, 'destroy'])->name('offices.destroy');
     });
 
-    Route::prefix('/products')->group(function () {
+    Route::group(['prefix' => '/products'], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('products.index');
         Route::get('/create', [ProductsController::class, 'create'])->name('products.create');
         Route::get('/mass-create', [ProductsController::class, 'mass_create'])->name('products.mass-create');
@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
     });
 
-    Route::prefix('/payment-methods')->group(function () {
+    Route::group(['prefix' => '/payment-methods', 'middleware' => 'role:admin'], function () {
         Route::get('/', [PaymentMethodsController::class, 'index'])->name('payment-methods.index');
         Route::get('/create', [PaymentMethodsController::class, 'create'])->name('payment-methods.create');
         Route::post('/', [PaymentMethodsController::class, 'store'])->name('payment-methods.store');
@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/{id}', [PaymentMethodsController::class, 'destroy'])->name('payment-methods.destroy');
     });
 
-    Route::prefix('/sales')->group(function () {
+    Route::group(['prefix' => '/sales'], function () {
         Route::get('/', [SalesController::class, 'index'])->name('sales.index');
         Route::get('/create', [SalesController::class, 'create'])->name('sales.create');
         Route::post('/', [SalesController::class, 'store'])->name('sales.store');
@@ -88,7 +88,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/{id}', [SalesController::class, 'destroy'])->name('sales.destroy');
     });
 
-    Route::prefix('/stocks')->group(function () {
+    Route::group(['prefix' => '/stocks'], function () {
         // Route::get('/', [StocksController::class, 'index'])->name('stocks.index');
         // Route::get('/create', [StocksController::class, 'create'])->name('stocks.create');
         Route::post('/', [StocksController::class, 'store'])->name('stocks.store');
@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function() {
         // Route::delete('/{id}', [StocksController::class, 'destroy'])->name('stocks.destroy');
     });
 
-    Route::prefix('/procedures')->group(function () {
+    Route::group(['prefix' => '/procedures'], function () {
         Route::get('/', [ProceduresController::class, 'index'])->name('procedures.index');
         Route::get('/create', [ProceduresController::class, 'create'])->name('procedures.create');
         Route::post('/', [ProceduresController::class, 'store'])->name('procedures.store');
@@ -108,7 +108,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('/{id}', [ProceduresController::class, 'destroy'])->name('procedures.destroy');
     });
 
-    Route::prefix('/sale-payments')->group(function () {
+    Route::group(['prefix' => '/sale-payments'], function () {
         // Route::get('/', [SalePaymentsController::class, 'index'])->name('sale-payments.index');
         // Route::get('/create', [SalePaymentsController::class, 'create'])->name('sale-payments.create');
         Route::post('/', [SalePaymentsController::class, 'store'])->name('sale-payments.store');
