@@ -86,6 +86,14 @@
                         <p>Creación masiva</p>
                      </a>
                   </li>
+
+                  <li class="nav-item">
+                     <a href="{{ route('products.mass-edit') }}" class="nav-link {{ request()->is('products/mass-edit') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+
+                        <p>Incrementar stocks</p>
+                     </a>
+                  </li>
                </ul>
             </li>
 

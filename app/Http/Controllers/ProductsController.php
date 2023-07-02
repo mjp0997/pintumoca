@@ -195,7 +195,7 @@ class ProductsController extends Controller
         return response()->json($products);
     }
 
-    public function mass_create(Request $request)
+    public function mass_create()
     {
         $breadcrumb = [
             [
@@ -207,7 +207,24 @@ class ProductsController extends Controller
             ],
         ];
 
-        return view('products.massive', [
+        return view('products.mass-create', [
+            'breadcrumb' => $breadcrumb
+        ]);
+    }
+
+    public function mass_edit()
+    {
+        $breadcrumb = [
+            [
+                'text' => 'Productos',
+                'route' => 'products.index'
+            ],
+            [
+                'text' => 'Actualizar stocks'
+            ],
+        ];
+
+        return view('products.mass-edit', [
             'breadcrumb' => $breadcrumb
         ]);
     }
@@ -215,6 +232,8 @@ class ProductsController extends Controller
     public function mass_read(ReadProductsFileRequest $request)
     {
         $data = $request->validated();
+
+        $route = $data['route'];
 
         $import = new ProductImport;
         
@@ -251,11 +270,15 @@ class ProductsController extends Controller
             return $product_data;
         });
 
+        $products = $products->filter(function ($product, $key) {
+            return isset($product['name']) && isset($product['code']);
+        });
+
         $offices = collect($products[0]['offices'])->map(function ($value, $key) {
             return $key;
         });
 
-        return redirect()->route('products.mass-create')->with('products', $products)->with('offices', $offices);
+        return redirect()->route("products.$route")->with('products', $products)->with('offices', $offices);
     }
 
     public function mass_store(ProductMassRequest $request)
@@ -292,6 +315,48 @@ class ProductsController extends Controller
                         ], [
                             'stock' => $stock
                         ]);
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('products.index');
+    }
+
+    public function mass_update(ProductMassRequest $request)
+    {
+        $data = $request->validated();
+
+        foreach ($data['products'] as $row) {
+            $total_stock = 0;
+
+            foreach ($row['offices'] as $office => $stock) {
+                $total_stock += $stock;
+            }
+
+            if ($total_stock > 0) {
+                $product = Product::firstOrCreate([
+                    'code' => $row['code']
+                ], [
+                    'name' => $row['name']
+                ]);
+    
+                foreach ($row['offices'] as $office_name => $stock) {
+                    if ($stock > 0) {
+                        $office = Office::firstOrCreate([
+                            'name' => $office_name
+                        ]);
+        
+                        $stock_data = Stock::firstOrCreate([
+                            'product_id' => $product->id,
+                            'office_id' => $office->id
+                        ], [
+                            'stock' => $stock
+                        ]);
+
+                        if (!$stock_data->wasRecentlyCreated) {
+                            $stock_data->increment('stock', $stock);
+                        }
                     }
                 }
             }

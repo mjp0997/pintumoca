@@ -22,6 +22,7 @@ class ReadProductsFileRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'route' => 'required|string|in:mass-create,mass-edit',
             'import' => 'required|file'
         ];
     }
@@ -29,6 +30,9 @@ class ReadProductsFileRequest extends FormRequest
     public function messages()
     {
         return [
+            'route.required' => 'Este campo es obligatorio',
+            'route.string' => 'Este campo debe ser un string',
+            'route.in' => 'Este campo debe ser "mass-create" o "mass-edit"',
             'import.required' => 'Este campo es obligatorio',
             'import.file' => 'Este campo debe ser un archivo',
         ];
