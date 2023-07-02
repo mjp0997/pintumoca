@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\DollarExchangeTrait;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    use DollarExchangeTrait;
+    
     public function index()
     {
+        $dollar = $this->getCurrentExchange();
+
         $breadcrumb = [
             [
                 'text' => 'Dashboard'
@@ -15,7 +20,8 @@ class DashboardController extends Controller
         ];
 
         return view('dashboard', [
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'dollar' => $dollar
         ]);
     }
 }
