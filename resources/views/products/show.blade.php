@@ -51,12 +51,12 @@
 
                         <div class='row mb-3'>
                            <div class='col'>
-                              <button class='btn btn-warning btn-block open-modal-btn' data-modal-id='stock-modal-{{ $office->id }}'>Editar stock</button>
+                              <button class='btn btn-warning btn-block open-modal-btn' data-modal-id='stock-modal-{{ $office->id }}'>Editar</button>
                            </div>
                            
                            @if (isset(collect($product->stocks)->firstWhere('office_id', $office->id)?->stock))
                               <div class='col'>
-                                 <button class='btn btn-success btn-block open-modal-btn' data-modal-id='increase-stock-modal-{{ $office->id }}'>Agregar stock</button>
+                                 <button class='btn btn-success btn-block open-modal-btn' data-modal-id='increase-stock-modal-{{ $office->id }}'>Agregar</button>
                               </div>
                            @endif
                         </div>
