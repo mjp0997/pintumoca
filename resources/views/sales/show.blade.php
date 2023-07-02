@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('custom-head')
+   <link rel='stylesheet' href='{{ asset('css/sales-create.css') }}'>
    <link rel='stylesheet' href='{{ asset('css/payments-modal.css') }}'>
 @endsection
 
@@ -11,7 +12,7 @@
 @section('content')
    @if (isset($sale))
       <div class='row'>
-         <div class='col-12'>
+         <div class='col-12 col-md-9'>
             <div class="card">
                <div class="card-header">
                   <h3 class="card-title">Detalles de la venta</h3>
@@ -19,97 +20,110 @@
 
                <div class="card-body">
                   <div class="row">
-                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                        <div class="row">
-                           <div class="col-12 col-sm-4">
-                              <div class="info-box bg-light">
-                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Total</span>
+                     <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light mb-md-0">
+                           <div class="info-box-content">
+                              <span class="info-box-text text-center text-muted">Total</span>
 
-                                    <span class="info-box-number text-center text-muted mb-0">$ {{ $sale->total }}</span>
-                                 </div>
-                              </div>
-                           </div>
-
-                           <div class="col-12 col-sm-4">
-                              <div class="info-box bg-light">
-                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Fecha</span>
-
-                                    <span class="info-box-number text-center text-muted mb-0">{{ date_format(date_create($sale->date), 'd/m/Y') }}</span>
-                                 </div>
-                              </div>
-                           </div>
-
-                           <div class="col-12 col-sm-4">
-                              <div class="info-box bg-light">
-                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Sucursal</span>
-
-                                    <span class="info-box-number text-center text-muted mb-0">{{ $sale->office->name }}</span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-
-                        <div class="row">
-                           <div class="col-12">
-                              <h4>Productos</h4>
-
-                              @foreach ($sale->lines as $line)
-                                 <div class="post">
-                                    <div class='row'>
-                                       <div class='col-8 col-md-5'>
-                                          <div class="w-100 h-100 d-flex flex-column justify-content-center">
-                                             <span class="d-block">
-                                                <a href="#"><b>{{ $line->product->name }}</b></a>
-                                             </span>
-            
-                                             <small class="d-block">{{ $line->product->code }}</small>
-                                          </div>
-                                       </div>
-
-                                       <div class='col'>
-                                          <div class='row h-100'>
-                                             <div class='col-12 col-md'>
-                                                <div class='h-100 d-flex align-items-center justify-content-center'>
-                                                   <p class="mb-0">$ {{ $line->price }}</p>
-                                                </div>
-                                             </div>
-
-                                             <div class='col-12 col-md'>
-                                                <div class='h-100 d-flex align-items-center justify-content-center'>
-                                                   <p class="mb-0">{{ $line->quantity }}</p>
-                                                </div>
-                                             </div>
-                                             
-                                             <div class='col-12 col-md'>
-                                                <div class='h-100 d-flex align-items-center justify-content-center'>
-                                                   <p class="mb-0"><b>$ {{ $line->subtotal }}</b></p>
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              @endforeach
+                              <span class="info-box-number text-center text-muted mb-0">$ {{ $sale->total }}</span>
                            </div>
                         </div>
                      </div>
 
-                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h4 class="text-primary text-center">FACTURACIÓN</h4>
+                     <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light mb-md-0">
+                           <div class="info-box-content">
+                              <span class="info-box-text text-center text-muted">Fecha</span>
 
-                        <br>
+                              <span class="info-box-number text-center text-muted mb-0">{{ date_format(date_create($sale->date), 'd/m/Y') }}</span>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light mb-md-0">
+                           <div class="info-box-content">
+                              <span class="info-box-text text-center text-muted">Sucursal</span>
+
+                              <span class="info-box-number text-center text-muted mb-0">{{ $sale->office->name }}</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <hr class="my-4" style="margin-left: -1.25rem; margin-right: -1.25rem;">
+
+                  <div class="row">
+                     <div class="col-12">
+                        <h4 class="text-center">Productos</h4>
+
+                        @foreach ($sale->lines as $line)
+                           <div class="sale-row">
+                              <div class='row'>
+                                 <div class='col-8 col-md-5'>
+                                    <div class="w-100 h-100 d-flex flex-column justify-content-center">
+                                       <span class="d-block">
+                                          <a href="#"><b>{{ $line->product->name }}</b></a>
+                                       </span>
+      
+                                       <small class="d-block">{{ $line->product->code }}</small>
+                                    </div>
+                                 </div>
+
+                                 <div class='col'>
+                                    <div class='row h-100'>
+                                       <div class='col-12 col-md'>
+                                          <div class='h-100 d-flex align-items-center justify-content-center'>
+                                             <p class="mb-0">$ {{ $line->price }}</p>
+                                          </div>
+                                       </div>
+
+                                       <div class='col-12 col-md'>
+                                          <div class='h-100 d-flex align-items-center justify-content-center'>
+                                             <p class="mb-0">{{ $line->quantity }}</p>
+                                          </div>
+                                       </div>
+                                       
+                                       <div class='col-12 col-md'>
+                                          <div class='h-100 d-flex align-items-center justify-content-center'>
+                                             <p class="mb-0"><b>$ {{ $line->subtotal }}</b></p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        @endforeach
+                     </div>
+                  </div>
+
+                  <hr class="my-4" style="margin-left: -1.25rem; margin-right: -1.25rem;">
+
+                  <div class='row'>
+                     <div class="col-12 col-md-6">
+                        <h4 class="text-center">Facturación</h4>
+
+                        <div class="d-flex justify-content-between text-muted">
+                           <p class="mb-0">Ejecutivo:</p>
+                           
+                           <b class="ml-auto">{{ $sale->user->name }}</b>
+                        </div>
 
                         @if (isset($sale->client))
                            <div class="d-flex justify-content-between text-muted">
-                              <p class="text-sm">Cliente:</p>
-                              <b class="text-sm ml-auto">{{ $sale->client->name }}</b>
+                              <p class="mb-0">Cliente:</p>
+                              
+                              <b class="ml-auto">{{ $sale->client->name }}</b>
                            </div>
                         @endif
-         
-                        <h5 class="mt-5 text-muted text-center">Pagos</h5>
+                     </div>
+
+                     <div class='col-12 d-md-none'>
+                        <hr class="my-4" style="margin-left: -1.25rem; margin-right: -1.25rem;">
+                     </div>
+
+                     <div class='col-12 col-md-6'>
+                        <h4 class="text-center">Pagos</h4>
 
                         <ul class="list-unstyled">
                            @foreach ($sale->payments as $line)
@@ -148,6 +162,19 @@
                   </div>
                </div>
                <!-- /.card-body -->
+            </div>
+         </div>
+
+         <div class='col-12 col-md-3'>
+            <div class='card'>
+               <form class='card-body d-flex flex-column delete-form' action="{{ route('products.destroy', ['id' => $sale->id]) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+   
+                  <a href="{{ route('sales.index') }}" class="btn btn-outline-secondary btn-block">Lista de ventas</a>
+                  
+                  <button type="submit" class="btn btn-danger btn-block">Eliminar</button>
+               </form>
             </div>
          </div>
       </div>
