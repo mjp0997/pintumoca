@@ -13,12 +13,13 @@
 @endsection
 
 @section('content')
-
 <div class='row'>
    <div class='col-12 col-md-9'>
       <form class="card" action="{{ route('products.mass-read') }}" method="POST" enctype="multipart/form-data">
          @csrf
          @method('POST')
+
+         <input type='hidden' name='route' value="mass-create">
 
          <div class="card-header">
             <h3 class="card-title">Cargar productos</h3>
