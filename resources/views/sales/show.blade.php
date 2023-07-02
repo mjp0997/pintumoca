@@ -7,6 +7,7 @@
 
 @section('scripts')
    <script src='{{ asset('js/alerts.js') }}'></script>
+   <script src='{{ asset('js/modal.js') }}'></script>
 @endsection
 
 @section('content')
@@ -345,8 +346,4 @@
    @else
       @include('components.ui.404')
    @endif
-@endsection
-
-@section('scripts')
-   <script src='{{ asset('js/modal.js') }}'></script>
 @endsection
