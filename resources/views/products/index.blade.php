@@ -30,23 +30,25 @@
                   </div>
                </div>
 
-               <div class='col'>
-                  <div class="form-group">
-                     <label for="office_id">Sucursal</label>
+               @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+                  <div class='col'>
+                     <div class="form-group">
+                        <label for="office_id">Sucursal</label>
 
-                     <select
-                        class="form-control text-center @if($errors->has('office_id')) is-invalid @endif"
-                        name="office_id"
-                        id="office_id"
-                     >
-                        <option value='' {{ request()->get('office_id', '') == '' ? 'selected' : '' }}>Todas</option>
+                        <select
+                           class="form-control text-center @if($errors->has('office_id')) is-invalid @endif"
+                           name="office_id"
+                           id="office_id"
+                        >
+                           <option value='' {{ request()->get('office_id', '') == '' ? 'selected' : '' }}>Todas</option>
 
-                        @foreach ($offices as $office)
-                           <option value='{{ $office->id }}' {{ request()->get('office_id', '') == $office->id ? 'selected' : '' }}>{{ $office->name }}</option>
-                        @endforeach
-                     </select>
+                           @foreach ($offices as $office)
+                              <option value='{{ $office->id }}' {{ request()->get('office_id', '') == $office->id ? 'selected' : '' }}>{{ $office->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
                   </div>
-               </div>
+               @endif
 
                <div class='col-12 col-md-3'>
                   <div class='row h-100'>
@@ -124,13 +126,17 @@
                                        <i class="fas fa-eye"></i>
                                     </a>
    
-                                    <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-info">
-                                       <i class="far fa-edit"></i>
-                                    </a>
+                                    @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+                                       <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-info">
+                                          <i class="far fa-edit"></i>
+                                       </a>
+                                    @endif
    
-                                    <button type="submit" class="btn btn-danger">
-                                       <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+                                       <button type="submit" class="btn btn-danger">
+                                          <i class="fas fa-trash-alt"></i>
+                                       </button>
+                                    @endif
                                  </div>
                               </form>
                            </td>

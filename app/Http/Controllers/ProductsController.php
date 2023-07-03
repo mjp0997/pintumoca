@@ -10,6 +10,7 @@ use App\Models\Office;
 use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller
@@ -21,7 +22,9 @@ class ProductsController extends Controller
     {
         $search = $request->query('search', null);
 
-        $office_id = $request->query('office_id', null);
+        $auth_office_id = Auth::user()->office_id;
+
+        $office_id = $auth_office_id ?? $request->query('office_id', null);
 
         $products = Product::with('stocks.office')->orderBy('name', 'ASC');
 
@@ -39,7 +42,13 @@ class ProductsController extends Controller
 
         $products = $products->paginate(12);
 
-        $offices = Office::orderBy('name', 'ASC')->get();
+        $offices = Office::orderBy('name', 'ASC');
+
+        if (isset($auth_office_id)) {
+            $offices = $offices->where('id', $auth_office_id);
+        }
+
+        $offices = $offices->get();
 
         $breadcrumb = [
             [
