@@ -50,9 +50,11 @@
                                     <i class="fas fa-eye"></i>
                                  </a>
    
-                                 <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                 </button>
+                                 @if (Helper::is_owner_or_allowed(Auth::user(), $procedure))
+                                    <button type="submit" class="btn btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                 @endif
                               </div>
                            </form>
                         </td>

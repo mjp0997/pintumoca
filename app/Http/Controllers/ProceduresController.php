@@ -7,6 +7,7 @@ use App\Models\Office;
 use App\Models\Procedure;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProceduresController extends Controller
 {
@@ -15,7 +16,17 @@ class ProceduresController extends Controller
      */
     public function index()
     {
-        $procedures = Procedure::with('fromOffice', 'toOffice', 'user')->orderBy('created_at', 'DESC')->paginate(12);
+        $user = Auth::user();
+
+        $procedures = Procedure::with('fromOffice', 'toOffice', 'user')->orderBy('created_at', 'DESC');
+
+        if (isset($user->office_id)) {
+            $procedures = $procedures->where(function ($query) use ($user) {
+                return $query->where('from_office_id', $user->office_id)->orWhere('to_office_id', $user->office_id);
+            });
+        }
+
+        $procedures = $procedures->paginate(12);
 
         $breadcrumb = [
             [

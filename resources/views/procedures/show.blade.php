@@ -100,7 +100,9 @@
 
                <a href="{{ route('procedures.index') }}" class="btn btn-outline-secondary btn-block">Lista de entregas</a>
                
-               <button type="submit" class="btn btn-danger btn-block">Eliminar</button>
+               @if (Helper::is_owner_or_allowed(Auth::user(), $procedure))
+                  <button type="submit" class="btn btn-danger btn-block">Eliminar</button>
+               @endif
             </form>
          </div>
       </div>
