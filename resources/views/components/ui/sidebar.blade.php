@@ -21,8 +21,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+            <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
             <li class="nav-item {{ request()->is('sales*') ? 'menu-open' : '' }}">
                <a href="#" class="nav-link {{ request()->is('sales*') ? 'active' : '' }}">
                   <i class="nav-icon fas fa-receipt"></i>
@@ -71,29 +70,35 @@
                      </a>
                   </li>
 
-                  <li class="nav-item">
-                     <a href="{{ route('products.create') }}" class="nav-link {{ request()->is('products/create') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                  @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+                     <li class="nav-item">
+                        <a href="{{ route('products.create') }}" class="nav-link {{ request()->is('products/create') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Crear</p>
-                     </a>
-                  </li>
+                           <p>Crear</p>
+                        </a>
+                     </li>
+                  @endif
 
-                  <li class="nav-item">
-                     <a href="{{ route('products.mass-create') }}" class="nav-link {{ request()->is('products/mass-create') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                  @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+                     <li class="nav-item">
+                        <a href="{{ route('products.mass-create') }}" class="nav-link {{ request()->is('products/mass-create') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Creación masiva</p>
-                     </a>
-                  </li>
+                           <p>Creación masiva</p>
+                        </a>
+                     </li>
+                  @endif
 
-                  <li class="nav-item">
-                     <a href="{{ route('products.mass-edit') }}" class="nav-link {{ request()->is('products/mass-edit') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                  @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+                     <li class="nav-item">
+                        <a href="{{ route('products.mass-edit') }}" class="nav-link {{ request()->is('products/mass-edit') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Incrementar stocks</p>
-                     </a>
-                  </li>
+                           <p>Incrementar stocks</p>
+                        </a>
+                     </li>
+                  @endif
                </ul>
             </li>
 
@@ -126,92 +131,98 @@
                </ul>
             </li>
 
-            <li class="nav-item {{ request()->is('users*') ? 'menu-open' : '' }}">
-               <a href="#" class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-users"></i>
+            @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+               <li class="nav-item {{ request()->is('users*') ? 'menu-open' : '' }}">
+                  <a href="#" class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
+                     <i class="nav-icon fas fa-users"></i>
 
-                  <p>
-                     Usuarios
-                     <i class="right fas fa-angle-left"></i>
-                  </p>
-               </a>
+                     <p>
+                        Usuarios
+                        <i class="right fas fa-angle-left"></i>
+                     </p>
+                  </a>
 
-               <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                     <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                  <ul class="nav nav-treeview">
+                     <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Listado</p>
-                     </a>
-                  </li>
+                           <p>Listado</p>
+                        </a>
+                     </li>
 
-                  <li class="nav-item">
-                     <a href="{{ route('users.create') }}" class="nav-link {{ request()->is('users/create') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                     <li class="nav-item">
+                        <a href="{{ route('users.create') }}" class="nav-link {{ request()->is('users/create') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Crear</p>
-                     </a>
-                  </li>
-               </ul>
-            </li>
+                           <p>Crear</p>
+                        </a>
+                     </li>
+                  </ul>
+               </li>
+            @endif
 
-            <li class="nav-item {{ request()->is('offices*') ? 'menu-open' : '' }}">
-               <a href="#" class="nav-link {{ request()->is('offices*') ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-building"></i>
+            @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+               <li class="nav-item {{ request()->is('offices*') ? 'menu-open' : '' }}">
+                  <a href="#" class="nav-link {{ request()->is('offices*') ? 'active' : '' }}">
+                     <i class="nav-icon fas fa-building"></i>
 
-                  <p>
-                     Sucursales
-                     <i class="right fas fa-angle-left"></i>
-                  </p>
-               </a>
+                     <p>
+                        Sucursales
+                        <i class="right fas fa-angle-left"></i>
+                     </p>
+                  </a>
 
-               <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                     <a href="{{ route('offices.index') }}" class="nav-link {{ request()->is('offices') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                  <ul class="nav nav-treeview">
+                     <li class="nav-item">
+                        <a href="{{ route('offices.index') }}" class="nav-link {{ request()->is('offices') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Listado</p>
-                     </a>
-                  </li>
+                           <p>Listado</p>
+                        </a>
+                     </li>
 
-                  <li class="nav-item">
-                     <a href="{{ route('offices.create') }}" class="nav-link {{ request()->is('offices/create') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                     <li class="nav-item">
+                        <a href="{{ route('offices.create') }}" class="nav-link {{ request()->is('offices/create') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Crear</p>
-                     </a>
-                  </li>
-               </ul>
-            </li>
+                           <p>Crear</p>
+                        </a>
+                     </li>
+                  </ul>
+               </li>
+            @endif
 
-            <li class="nav-item {{ request()->is('payment-methods*') ? 'menu-open' : '' }}">
-               <a href="#" class="nav-link {{ request()->is('payment-methods*') ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-money-check-alt"></i>
+            @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+               <li class="nav-item {{ request()->is('payment-methods*') ? 'menu-open' : '' }}">
+                  <a href="#" class="nav-link {{ request()->is('payment-methods*') ? 'active' : '' }}">
+                     <i class="nav-icon fas fa-money-check-alt"></i>
 
-                  <p>
-                     Métodos de pago
-                     <i class="right fas fa-angle-left"></i>
-                  </p>
-               </a>
+                     <p>
+                        Métodos de pago
+                        <i class="right fas fa-angle-left"></i>
+                     </p>
+                  </a>
 
-               <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                     <a href="{{ route('payment-methods.index') }}" class="nav-link {{ request()->is('payment-methods') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                  <ul class="nav nav-treeview">
+                     <li class="nav-item">
+                        <a href="{{ route('payment-methods.index') }}" class="nav-link {{ request()->is('payment-methods') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Listado</p>
-                     </a>
-                  </li>
+                           <p>Listado</p>
+                        </a>
+                     </li>
 
-                  <li class="nav-item">
-                     <a href="{{ route('payment-methods.create') }}" class="nav-link {{ request()->is('payment-methods/create') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                     <li class="nav-item">
+                        <a href="{{ route('payment-methods.create') }}" class="nav-link {{ request()->is('payment-methods/create') ? 'active' : '' }}">
+                           <i class="far fa-circle nav-icon"></i>
 
-                        <p>Crear</p>
-                     </a>
-                  </li>
-               </ul>
-            </li>
+                           <p>Crear</p>
+                        </a>
+                     </li>
+                  </ul>
+               </li>
+            @endif
          </ul>
       </nav>
       <!-- /.sidebar-menu -->
