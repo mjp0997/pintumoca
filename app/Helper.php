@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Role;
+use App\Models\User;
 
 class Helper 
 {
@@ -34,5 +35,21 @@ class Helper
       })->toArray();
 
       return in_array(strtolower($role), $roles);
+   }
+
+   /**
+    * Method to check if the user owns or its allowed a model
+    */
+   public static function is_owner_or_allowed(User $user, $model)
+   {
+      if (in_array($user->role->name, ['DEV', 'ADMIN'])) {
+         return true;
+      }
+
+      if ($model->user_id == $user->id) {
+         return true;
+      }
+
+      return false;
    }
 }
