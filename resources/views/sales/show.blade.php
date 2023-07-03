@@ -174,7 +174,9 @@
    
                   <a href="{{ route('sales.index') }}" class="btn btn-outline-secondary btn-block">Lista de ventas</a>
                   
-                  <button type="submit" class="btn btn-danger btn-block">Eliminar</button>
+                  @if (Helper::is_owner_or_allowed(Auth::user(), $sale))
+                     <button type="submit" class="btn btn-danger btn-block">Eliminar</button>
+                  @endif
                </form>
             </div>
          </div>

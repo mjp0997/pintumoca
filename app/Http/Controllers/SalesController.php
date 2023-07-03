@@ -12,6 +12,7 @@ use App\Models\Sale;
 use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalesController extends Controller
 {
@@ -22,11 +23,13 @@ class SalesController extends Controller
      */
     public function index(Request $request)
     {
+        $auth_user = Auth::user();
+
         $date = $request->query('date', null);
 
-        $office_id = $request->query('office_id', null);
+        $office_id = $auth_user->office_id ?? $request->query('office_id', null);
 
-        $user_id = $request->query('user_id', null);
+        $user_id = $auth_user->id ?? $request->query('user_id', null);
 
         $client = $request->query('client', null);
 
