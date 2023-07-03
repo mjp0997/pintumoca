@@ -55,17 +55,17 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => '/products'], function () {
         Route::get('/', [ProductsController::class, 'index'])->name('products.index');
-        Route::get('/create', [ProductsController::class, 'create'])->name('products.create');
-        Route::get('/mass-create', [ProductsController::class, 'mass_create'])->name('products.mass-create');
-        Route::get('/mass-edit', [ProductsController::class, 'mass_edit'])->name('products.mass-edit');
-        Route::post('/', [ProductsController::class, 'store'])->name('products.store');
-        Route::post('/mass-read', [ProductsController::class, 'mass_read'])->name('products.mass-read');
-        Route::post('/mass-store', [ProductsController::class, 'mass_store'])->name('products.mass-store');
+        Route::get('/create', [ProductsController::class, 'create'])->middleware(['role:admin'])->name('products.create');
+        Route::get('/mass-create', [ProductsController::class, 'mass_create'])->middleware(['role:admin'])->name('products.mass-create');
+        Route::get('/mass-edit', [ProductsController::class, 'mass_edit'])->middleware(['role:admin'])->name('products.mass-edit');
+        Route::post('/', [ProductsController::class, 'store'])->middleware(['role:admin'])->name('products.store');
+        Route::post('/mass-read', [ProductsController::class, 'mass_read'])->middleware(['role:admin'])->name('products.mass-read');
+        Route::post('/mass-store', [ProductsController::class, 'mass_store'])->middleware(['role:admin'])->name('products.mass-store');
         Route::get('/{id}', [ProductsController::class, 'show'])->name('products.show');
-        Route::get('/{id}/edit', [ProductsController::class, 'edit'])->name('products.edit');
-        Route::put('/mass-update', [ProductsController::class, 'mass_update'])->name('products.mass-update');
-        Route::put('/{id}', [ProductsController::class, 'update'])->name('products.update');
-        Route::delete('/{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
+        Route::get('/{id}/edit', [ProductsController::class, 'edit'])->middleware(['role:admin'])->name('products.edit');
+        Route::put('/mass-update', [ProductsController::class, 'mass_update'])->middleware(['role:admin'])->name('products.mass-update');
+        Route::put('/{id}', [ProductsController::class, 'update'])->middleware(['role:admin'])->name('products.update');
+        Route::delete('/{id}', [ProductsController::class, 'destroy'])->middleware(['role:admin'])->name('products.destroy');
     });
 
     Route::group(['prefix' => '/payment-methods', 'middleware' => 'role:admin'], function () {
@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{id}', [SalesController::class, 'show'])->name('sales.show');
         // Route::get('/{id}/edit', [SalesController::class, 'edit'])->name('sales.edit');
         // Route::put('/{id}', [SalesController::class, 'update'])->name('sales.update');
-        Route::delete('/{id}', [SalesController::class, 'destroy'])->name('sales.destroy');
+        Route::delete('/{id}', [SalesController::class, 'destroy'])->middleware(['is_owner:Procedure'])->name('sales.destroy');
     });
 
     Route::group(['prefix' => '/stocks'], function () {
@@ -105,7 +105,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{id}', [ProceduresController::class, 'show'])->name('procedures.show');
         // Route::get('/{id}/edit', [ProceduresController::class, 'edit'])->name('procedures.edit');
         // Route::put('/', [ProceduresController::class, 'update'])->name('procedures.update');
-        Route::delete('/{id}', [ProceduresController::class, 'destroy'])->name('procedures.destroy');
+        Route::delete('/{id}', [ProceduresController::class, 'destroy'])->middleware(['is_owner:Procedure'])->name('procedures.destroy');
     });
 
     Route::group(['prefix' => '/sale-payments'], function () {
