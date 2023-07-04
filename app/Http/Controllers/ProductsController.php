@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExcelExport;
 use App\Http\Requests\ProductMassRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ReadProductsFileRequest;
@@ -9,6 +10,7 @@ use App\Imports\ProductImport;
 use App\Models\Office;
 use App\Models\Product;
 use App\Models\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -372,5 +374,39 @@ class ProductsController extends Controller
         }
 
         return redirect()->route('products.index');
+    }
+
+    public function export_current()
+    {
+        $products = Product::with('stocks.office')->orderBy('code', 'ASC')->get();
+
+        $offices = Office::orderBy('name', 'ASC')->get();
+
+        $offices = collect($offices)->map(function ($row) {
+            return $row->name;
+        })->toArray();
+
+        $headings = ['Material', 'Descripcion', ...$offices];
+
+        $products = collect($products)->map(function ($row) use ($offices) {
+
+            $stocks = [];
+
+            $data = collect($row->stocks);
+
+            foreach ($offices as $office) {
+                $stocks[] = $data->firstWhere('office.name', $office)->stock ?? '';
+            }
+
+            return [
+                'code' => $row->code,
+                'name' => $row->name,
+                ...$stocks
+            ];
+        })->toArray();
+
+        $date = (new Carbon())->format('Y-m-d');
+
+        return Excel::download(new ExcelExport($products, $headings), "inventario $date.xlsx");
     }
 }

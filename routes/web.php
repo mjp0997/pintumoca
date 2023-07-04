@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/create', [ProductsController::class, 'create'])->middleware(['role:admin'])->name('products.create');
         Route::get('/mass-create', [ProductsController::class, 'mass_create'])->middleware(['role:admin'])->name('products.mass-create');
         Route::get('/mass-edit', [ProductsController::class, 'mass_edit'])->middleware(['role:admin'])->name('products.mass-edit');
+        Route::get('/export', [ProductsController::class, 'export_current'])->middleware(['role:admin'])->name('products.export');
         Route::post('/', [ProductsController::class, 'store'])->middleware(['role:admin'])->name('products.store');
         Route::post('/mass-read', [ProductsController::class, 'mass_read'])->middleware(['role:admin'])->name('products.mass-read');
         Route::post('/mass-store', [ProductsController::class, 'mass_store'])->middleware(['role:admin'])->name('products.mass-store');

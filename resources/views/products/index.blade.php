@@ -6,8 +6,8 @@
 
 @section('content')
 <div class='row'>
-   <div class='col-12 col-md'>
-      <div class="card">
+   <div class='col-12 col-md d-flex align-items-stretch'>
+      <div class="card flex-grow-1">
          <div class="card-header">
             <h3 class="card-title">Filtros</h3>
          </div>
@@ -66,6 +66,17 @@
          <!-- /.card-body -->
       </div>
    </div>
+
+   @if (Helper::role_is_allowed(Auth::user()->role->name, 'admin'))
+      <div class='col-12 col-md-3 d-flex align-items-stretch'>
+         <div class="card flex-grow-1">
+            <div class="card-body d-flex flex-column">
+               <a class="btn btn-primary" href='{{ route('products.export') }}'>Exportar</a>
+            </div>
+            <!-- /.card-body -->
+         </div>
+      </div>
+   @endif
 </div>
 
 <div class="row">
