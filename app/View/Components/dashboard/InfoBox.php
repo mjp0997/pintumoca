@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 
 class InfoBox extends Component
 {
+    public $box_class = null;
     public $icon_class = null;
     public $title = null;
     public $text = null;
@@ -15,8 +16,9 @@ class InfoBox extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $iconClass, string $title, string $text)
+    public function __construct(string $boxClass, string $iconClass, string $title, string $text)
     {
+        $this->box_class = $boxClass;
         $this->icon_class = $iconClass;
         $this->title = $title;
         $this->text = $text;
