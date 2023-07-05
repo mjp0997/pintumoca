@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
-use App\View\Components\dashboard\InfoBox;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
+
+// Pagination
+use Illuminate\Pagination\Paginator;
+
+// Components
+use App\View\Components\dashboard\InfoBox;
+use App\View\Components\dashboard\SalesList;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Dashboard components
         Blade::component('info-box', InfoBox::class);
+        Blade::component('sales-list', SalesList::class);
         
         Paginator::useBootstrapFour();
     }
