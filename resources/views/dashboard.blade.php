@@ -1,73 +1,66 @@
 @extends('layouts.dashboard')
 
+@section('scripts')
+   <!-- FLOT CHARTS -->
+   <script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
+   <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+   <script src="{{ asset('plugins/flot/plugins/jquery.flot.resize.js') }}"></script>
+
+   {{-- Graphs --}}
+   <script src='{{ asset('js/dashboard/charts.js') }}'></script>
+@endsection
+
 @section('content')
 <div class="row">
-   <x-info-box icon-class="fas fa-dollar-sign" title="Dólar BCV" :text="$dollar" />
+   <x-info-box box-class="bg-info" icon-class="fas fa-dollar-sign" title="Dólar BCV" :text="$dollar" />
+
+   <x-info-box box-class="bg-success" icon-class="fas fa-boxes" title="# de ventas de hoy" :text="$sales_quantity" />
+   
+   <x-info-box box-class="bg-primary" icon-class="fas fa-shopping-cart" title="Ventas del día" text="$ {{ $today_sales }}" />
+
+   <x-info-box box-class="bg-warning" icon-class="fas fa-receipt" title="Pendiente de hoy" text="$ {{ $today_debt }}" />
 </div>
+<!-- /.row -->
 
-<div class="row">
-   <div class="col-lg-6">
-      <div class="card">
-         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-
-            <p class="card-text">
-               Some quick example text to build on the card title and make up the bulk of the card's
-               content.
-            </p>
-
-            <a href="#" class="card-link">Card link</a>
-
-            <a href="#" class="card-link">Another link</a>
-         </div>
-      </div>
-
-      <div class="card card-primary card-outline">
-         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-
-            <p class="card-text">
-               Some quick example text to build on the card title and make up the bulk of the card's
-               content.
-            </p>
-
-            <a href="#" class="card-link">Card link</a>
-
-            <a href="#" class="card-link">Another link</a>
-         </div>
-      </div><!-- /.card -->
-   </div>
-   <!-- /.col-md-6 -->
-   <div class="col-lg-6">
-      <div class="card">
-         <div class="card-header">
-            <h5 class="m-0">Featured</h5>
-         </div>
-
-         <div class="card-body">
-            <h6 class="card-title">Special title treatment</h6>
-
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-         </div>
-      </div>
-
+<div class='row'>
+   <div class='col-12 col-md-6'>
       <div class="card card-primary card-outline">
          <div class="card-header">
-            <h5 class="m-0">Featured</h5>
+            <h3 class="card-title">
+               <i class="far fa-chart-bar"></i>
+               # de ventas de hoy
+            </h3>
          </div>
 
          <div class="card-body">
-            <h6 class="card-title">Special title treatment</h6>
-
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div id="sales-by-office" data-data='{{ json_encode($sales_by_office) }}' style="height: 300px;"></div>
          </div>
+         <!-- /.card-body-->
       </div>
+      <!-- /.card -->
    </div>
-   <!-- /.col-md-6 -->
+
+   <div class='col-12 col-md-6'>
+      <div class="card card-primary card-outline">
+         <div class="card-header">
+            <h3 class="card-title">
+               <i class="far fa-chart-bar"></i>
+               Ventas por sucursal
+            </h3>
+         </div>
+
+         <div class="card-body">
+            <div id="total-by-office" data-data='{{ json_encode($total_by_office) }}' style="height: 300px;"></div>
+         </div>
+         <!-- /.card-body-->
+      </div>
+      <!-- /.card -->
+   </div>
+</div>
+<!-- /.row -->
+
+<div class='row'>
+   <x-sales-list :sales="$last_sales" />
 </div>
 <!-- /.row -->
 @endsection
